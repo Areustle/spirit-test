@@ -1,0 +1,287 @@
+S486_2017264PRELIM.00,2017/243:07:11:16,GLAST,GSSC,NA,SCP,
+                  2017/264:00:00:00,
+                  2017/271:00:00:00,
+                  NA,Preliminary,00,
+                  targ_week486_Preliminary_00_DB.tcl,
+                  Preliminary science timeline ;
+// Mission Week: 486
+// Timeline Name: S486_2017264PRELIM.00      Created: 2017/243:07:11:16
+// Created with GLAST TAKO Version 5.20.6
+ 
+// Initial pointing 
+//                  RA = 205.337823
+//                  Dec = -34.307089
+// Initial survey-related flight parameter settings 
+//                  Rocking Profile:
+//                       ROCKSTART   = 2017/256:23:08:00 (527036882)
+//                       ROCKDEFAULT = 0.000000
+//                           ROCKTIME   ROCKANGLE
+//                       01         0    0.000000
+//                       02       190   38.000000
+//                       03       230   46.000000
+//                       04       270   50.000000
+//                       05      3000   50.000000
+//                       06      5445   50.000000
+//                       07      5485   46.000000
+//                       08      5525   38.000000
+//                       09      5715    0.000000
+//                       10      5905  -38.000000
+//                       11      5945  -46.000000
+//                       12      5985  -50.000000
+//                       13      9982  -50.000000
+//                       14     11160  -50.000000
+//                       15     11200  -46.000000
+//                       16     11240  -38.000000
+//                       17     11430    0.000000
+// 2017/264:00:00:00 Profile    End   obs_number = 100400-7-1
+//
+// Input files:
+// TAKO database: targ_week486_Preliminary_00_DB.tcl
+// Spacecraft ephemeris: /data/ops/opsdata/current/ephemeris/GLAST_EPH_2017240_2017282_00.txt
+// SAA: /data/ops/opsdata/saa_definitions/L_SAA_2008198.03
+//
+// Previous ARR Threshold was LOW
+ 
+//  Go to inertial point for 10 minutes while loading the profile definition when the current mode is Sky Survey
+//     Before the freeze the rock angle is 50.000000
+//     At end of the freeze observation, the rock angle will be 50.000000
+
+// ---------------------------------------------------
+
+// 2017/264:00:00:00 Obs        Begin obs_number = 100801-4-1
+//                   prop_ID     = 100801 
+//                   target_name = Freeze for loading 100400-8-1 
+//                   RA          = 234.85361 deg
+//                   dec         = -49.53684 deg
+//                   PI          = TAKO 
+//                   comment     = Inserted by TAKO at 2017-264-00:00:00 
+//                   week        = 486 
+//                   SSN         = 1 
+//                   duration    = 0.600 ksec
+//                   slew        = 0 sec
+//                   saa         = 0 sec
+//                   RA          = 234.85361 deg
+//                   DEC         = -49.53684 deg
+ 
+2017/264:00:00:00 CMD SACPOINTEDOBS (RA=234.853615, DEC=-49.536836);
+// 2017/264:00:10:00 Obs        End   obs_number = 100801-4-1
+
+// ---------------------------------------------------
+
+// 2017/264:00:10:00 Profile    Begin obs_number = 100400-8-1
+//                   prop_ID     = 100400 
+//                   target_name = 50 deg profile week 486 
+//                   PI          = Fermi 
+//                   comment     = 50deg 6am rock; orbit period 5715 sec; -/+ 50deg rock angle over 2 orbits 
+//                   week        = 486 
+//                   SSN         = 1 
+//                   duration    = 508.260 ksec
+//                   slew        = 120 sec
+//                   saa         = 96420 sec
+//                   RA          = 208.05939 deg
+//                   DEC         = -35.52400 deg
+//                   Rocking Profile:
+//                        ROCKSTART   = 2017/263:23:24:00 (527642642)
+//                        ROCKDEFAULT = 0.000000
+//                            ROCKTIME   ROCKANGLE
+//                        01         0    0.000000
+//                        02       190   38.000000
+//                        03       230   46.000000
+//                        04       270   50.000000
+//                        05      3000   50.000000
+//                        06      5445   50.000000
+//                        07      5485   46.000000
+//                        08      5525   38.000000
+//                        09      5715    0.000000
+//                        10      5905  -38.000000
+//                        11      5945  -46.000000
+//                        12      5985  -50.000000
+//                        13      9982  -50.000000
+//                        14     11160  -50.000000
+//                        15     11200  -46.000000
+//                        16     11240  -38.000000
+//                        17     11430    0.000000
+ 
+// The RA and DEC above are based on the original scheduled time (2017/264:00:00:00)
+// Expected values after the freeze ends at 2017/264:00:10:00, RA = 234.853615 DEC = -49.536836  Rock Angle = 50.000000
+2017/264:00:00:01 CMD SMFPFLOAT (PARAMID = FPVSGROCKDEFAULT, VALUE = 0.000000);
+2017/264:00:00:02 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME01, VALUE=0.000000);
+2017/264:00:00:03 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE01, VALUE=0.000000);
+2017/264:00:00:04 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME02, VALUE=190.000000);
+2017/264:00:00:05 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE02, VALUE=38.000000);
+2017/264:00:00:06 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME03, VALUE=230.000000);
+2017/264:00:00:07 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE03, VALUE=46.000000);
+2017/264:00:00:08 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME04, VALUE=270.000000);
+2017/264:00:00:09 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE04, VALUE=50.000000);
+2017/264:00:00:10 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME05, VALUE=3000.000000);
+2017/264:00:00:11 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE05, VALUE=50.000000);
+2017/264:00:00:12 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME06, VALUE=5445.000000);
+2017/264:00:00:13 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE06, VALUE=50.000000);
+2017/264:00:00:14 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME07, VALUE=5485.000000);
+2017/264:00:00:15 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE07, VALUE=46.000000);
+2017/264:00:00:16 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME08, VALUE=5525.000000);
+2017/264:00:00:17 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE08, VALUE=38.000000);
+2017/264:00:00:18 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME09, VALUE=5715.000000);
+2017/264:00:00:19 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE09, VALUE=0.000000);
+2017/264:00:00:20 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME10, VALUE=5905.000000);
+2017/264:00:00:21 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE10, VALUE=-38.000000);
+2017/264:00:00:22 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME11, VALUE=5945.000000);
+2017/264:00:00:23 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE11, VALUE=-46.000000);
+2017/264:00:00:24 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME12, VALUE=5985.000000);
+2017/264:00:00:25 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE12, VALUE=-50.000000);
+2017/264:00:00:26 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME13, VALUE=9982.000000);
+2017/264:00:00:27 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE13, VALUE=-50.000000);
+2017/264:00:00:28 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME14, VALUE=11160.000000);
+2017/264:00:00:29 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE14, VALUE=-50.000000);
+2017/264:00:00:30 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME15, VALUE=11200.000000);
+2017/264:00:00:31 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE15, VALUE=-46.000000);
+2017/264:00:00:32 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME16, VALUE=11240.000000);
+2017/264:00:00:33 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE16, VALUE=-38.000000);
+2017/264:00:00:34 CMD SMFPFLOAT (PARAMID=FPVSGROCKTIME17, VALUE=11430.000000);
+2017/264:00:00:35 CMD SMFPFLOAT (PARAMID=FPVSGROCKANGLE17, VALUE=0.000000);
+2017/264:00:00:36 CMD SMFPUINT32 (PARAMID=FPVSGROCKSTART, VALUE=527642642);
+ 
+2017/264:00:10:00 CMD SACSKYSURVEY ;
+ 
+// 2017/264:00:00:00 Slew       Begin obs_number = 100400-8-1
+// 2017/264:00:02:00 Slew       End   obs_number = 100400-8-1
+// 2017/264:00:12:00 saa        Begin obs_number = Global
+// 2017/264:00:43:00 saa        End   obs_number = Global
+// 2017/264:01:54:00 saa        Begin obs_number = Global
+// 2017/264:02:22:00 saa        End   obs_number = Global
+// 2017/264:03:37:00 saa        Begin obs_number = Global
+// 2017/264:04:01:00 saa        End   obs_number = Global
+// 2017/264:05:18:00 saa        Begin obs_number = Global
+// 2017/264:05:41:00 saa        End   obs_number = Global
+// 2017/264:06:59:00 saa        Begin obs_number = Global
+// 2017/264:07:19:00 saa        End   obs_number = Global
+// 2017/264:08:40:00 saa        Begin obs_number = Global
+// 2017/264:08:50:00 saa        End   obs_number = Global
+// 2017/264:17:30:00 saa        Begin obs_number = Global
+// 2017/264:17:41:00 saa        End   obs_number = Global
+// 2017/264:19:06:00 saa        Begin obs_number = Global
+// 2017/264:19:29:00 saa        End   obs_number = Global
+// 2017/264:20:43:00 saa        Begin obs_number = Global
+// 2017/264:21:10:00 saa        End   obs_number = Global
+// 2017/264:22:21:00 saa        Begin obs_number = Global
+// 2017/264:22:51:00 saa        End   obs_number = Global
+// 2017/264:23:59:00 saa        Begin obs_number = Global
+// 2017/265:00:30:00 saa        End   obs_number = Global
+// 2017/265:01:42:00 saa        Begin obs_number = Global
+// 2017/265:02:09:00 saa        End   obs_number = Global
+// 2017/265:03:25:00 saa        Begin obs_number = Global
+// 2017/265:03:49:00 saa        End   obs_number = Global
+// 2017/265:05:06:00 saa        Begin obs_number = Global
+// 2017/265:05:28:00 saa        End   obs_number = Global
+// 2017/265:06:46:00 saa        Begin obs_number = Global
+// 2017/265:07:05:00 saa        End   obs_number = Global
+// 2017/265:08:27:00 saa        Begin obs_number = Global
+// 2017/265:08:35:00 saa        End   obs_number = Global
+// 2017/265:17:16:00 saa        Begin obs_number = Global
+// 2017/265:17:32:00 saa        End   obs_number = Global
+// 2017/265:18:53:00 saa        Begin obs_number = Global
+// 2017/265:19:17:00 saa        End   obs_number = Global
+// 2017/265:20:30:00 saa        Begin obs_number = Global
+// 2017/265:20:58:00 saa        End   obs_number = Global
+// 2017/265:22:08:00 saa        Begin obs_number = Global
+// 2017/265:22:38:00 saa        End   obs_number = Global
+// 2017/265:23:46:00 saa        Begin obs_number = Global
+// 2017/266:00:17:00 saa        End   obs_number = Global
+// 2017/266:01:30:00 saa        Begin obs_number = Global
+// 2017/266:01:57:00 saa        End   obs_number = Global
+// 2017/266:03:12:00 saa        Begin obs_number = Global
+// 2017/266:03:36:00 saa        End   obs_number = Global
+// 2017/266:04:53:00 saa        Begin obs_number = Global
+// 2017/266:05:15:00 saa        End   obs_number = Global
+// 2017/266:06:34:00 saa        Begin obs_number = Global
+// 2017/266:06:52:00 saa        End   obs_number = Global
+// 2017/266:08:15:00 saa        Begin obs_number = Global
+// 2017/266:08:20:00 saa        End   obs_number = Global
+// 2017/266:17:03:00 saa        Begin obs_number = Global
+// 2017/266:17:21:00 saa        End   obs_number = Global
+// 2017/266:18:40:00 saa        Begin obs_number = Global
+// 2017/266:19:04:00 saa        End   obs_number = Global
+// 2017/266:20:17:00 saa        Begin obs_number = Global
+// 2017/266:20:45:00 saa        End   obs_number = Global
+// 2017/266:21:55:00 saa        Begin obs_number = Global
+// 2017/266:22:25:00 saa        End   obs_number = Global
+// 2017/266:23:34:00 saa        Begin obs_number = Global
+// 2017/267:00:05:00 saa        End   obs_number = Global
+// 2017/267:01:18:00 saa        Begin obs_number = Global
+// 2017/267:01:44:00 saa        End   obs_number = Global
+// 2017/267:03:00:00 saa        Begin obs_number = Global
+// 2017/267:03:23:00 saa        End   obs_number = Global
+// 2017/267:04:41:00 saa        Begin obs_number = Global
+// 2017/267:05:02:00 saa        End   obs_number = Global
+// 2017/267:06:22:00 saa        Begin obs_number = Global
+// 2017/267:06:38:00 saa        End   obs_number = Global
+// 2017/267:08:03:00 saa        Begin obs_number = Global
+// 2017/267:08:05:00 saa        End   obs_number = Global
+// 2017/267:16:49:00 saa        Begin obs_number = Global
+// 2017/267:17:09:00 saa        End   obs_number = Global
+// 2017/267:18:27:00 saa        Begin obs_number = Global
+// 2017/267:18:52:00 saa        End   obs_number = Global
+// 2017/267:20:04:00 saa        Begin obs_number = Global
+// 2017/267:20:33:00 saa        End   obs_number = Global
+// 2017/267:21:42:00 saa        Begin obs_number = Global
+// 2017/267:22:13:00 saa        End   obs_number = Global
+// 2017/267:23:22:00 saa        Begin obs_number = Global
+// 2017/267:23:52:00 saa        End   obs_number = Global
+// 2017/268:01:06:00 saa        Begin obs_number = Global
+// 2017/268:01:31:00 saa        End   obs_number = Global
+// 2017/268:02:47:00 saa        Begin obs_number = Global
+// 2017/268:03:10:00 saa        End   obs_number = Global
+// 2017/268:04:28:00 saa        Begin obs_number = Global
+// 2017/268:04:49:00 saa        End   obs_number = Global
+// 2017/268:06:09:00 saa        Begin obs_number = Global
+// 2017/268:06:23:00 saa        End   obs_number = Global
+// 2017/268:16:36:00 saa        Begin obs_number = Global
+// 2017/268:16:58:00 saa        End   obs_number = Global
+// 2017/268:18:14:00 saa        Begin obs_number = Global
+// 2017/268:18:40:00 saa        End   obs_number = Global
+// 2017/268:19:51:00 saa        Begin obs_number = Global
+// 2017/268:20:20:00 saa        End   obs_number = Global
+// 2017/268:21:29:00 saa        Begin obs_number = Global
+// 2017/268:22:00:00 saa        End   obs_number = Global
+// 2017/268:23:10:00 saa        Begin obs_number = Global
+// 2017/268:23:39:00 saa        End   obs_number = Global
+// 2017/269:00:54:00 saa        Begin obs_number = Global
+// 2017/269:01:19:00 saa        End   obs_number = Global
+// 2017/269:02:35:00 saa        Begin obs_number = Global
+// 2017/269:02:58:00 saa        End   obs_number = Global
+// 2017/269:04:16:00 saa        Begin obs_number = Global
+// 2017/269:04:36:00 saa        End   obs_number = Global
+// 2017/269:05:57:00 saa        Begin obs_number = Global
+// 2017/269:06:08:00 saa        End   obs_number = Global
+// 2017/269:14:48:00 saa        Begin obs_number = Global
+// 2017/269:14:53:00 saa        End   obs_number = Global
+// 2017/269:16:23:00 saa        Begin obs_number = Global
+// 2017/269:16:46:00 saa        End   obs_number = Global
+// 2017/269:18:01:00 saa        Begin obs_number = Global
+// 2017/269:18:27:00 saa        End   obs_number = Global
+// 2017/269:19:38:00 saa        Begin obs_number = Global
+// 2017/269:20:08:00 saa        End   obs_number = Global
+// 2017/269:21:16:00 saa        Begin obs_number = Global
+// 2017/269:21:47:00 saa        End   obs_number = Global
+// 2017/269:22:59:00 saa        Begin obs_number = Global
+// 2017/269:23:27:00 saa        End   obs_number = Global
+// 2017/270:00:41:00 saa        Begin obs_number = Global
+// 2017/270:01:06:00 saa        End   obs_number = Global
+// 2017/270:02:23:00 saa        Begin obs_number = Global
+// 2017/270:02:45:00 saa        End   obs_number = Global
+// 2017/270:04:03:00 saa        Begin obs_number = Global
+// 2017/270:04:23:00 saa        End   obs_number = Global
+// 2017/270:05:44:00 saa        Begin obs_number = Global
+// 2017/270:05:53:00 saa        End   obs_number = Global
+// 2017/270:14:34:00 saa        Begin obs_number = Global
+// 2017/270:14:47:00 saa        End   obs_number = Global
+// 2017/270:16:10:00 saa        Begin obs_number = Global
+// 2017/270:16:33:00 saa        End   obs_number = Global
+// 2017/270:17:48:00 saa        Begin obs_number = Global
+// 2017/270:18:15:00 saa        End   obs_number = Global
+// 2017/270:19:25:00 saa        Begin obs_number = Global
+// 2017/270:19:55:00 saa        End   obs_number = Global
+// 2017/270:21:03:00 saa        Begin obs_number = Global
+// 2017/270:21:35:00 saa        End   obs_number = Global
+// 2017/270:22:47:00 saa        Begin obs_number = Global
+// 2017/271:00:00:00 Profile    End   obs_number = 100400-8-1

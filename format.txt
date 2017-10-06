@@ -1,0 +1,35 @@
+Science timeline file:
+	1 header record
+	+ comments records
+	+ command records
+
+Header record
+	- terminated by semi-colon
+	filename											string					the name of this file (Required)
+	creation time									absolute time		the date and time that this file was created (Required)
+	mission identifier						string (e.g., GLAST)		 mission name (blank is accepted)
+	originator										string					name of person or organization who prepared the timeline (blank is accepted)
+	project db version						string					version number of the command database that the command definitions came from (blank is accepted)
+	destination processor 				string (SCP)		name of the spacecraft processor that will execute the commands (blank is accepted)
+	start time										absolute time		time tag of the first command (Required)
+	stop time											absolute time		time tag of the last command. must be greater than start time (Required)
+	execute flag									string					not used by MPS (blank is accepted)
+	timeline type									string					not used by MPS (user defined content)
+	version number								string					not used by MPS (user defined content)
+	reference timeline file name	string					not used by MPS (user defined content)
+	comment												string					user defined
+
+Comment records
+	- not terminated by semi-colon
+
+Command record
+	- terminated by semi-colon
+	absolute time command
+	absolute time activity
+	event trigger
+
+Time-absolute
+	yyyy/ddd:hh:mm:ss
+
+Time-relative
+	[-][Y/]DDD:HH:MM:SS
