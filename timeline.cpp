@@ -46,18 +46,16 @@ namespace client
 	{
 		std::string prop_ID;
 		std::string target_name;
-		std::string offset;
-		int target_RA;
-		int target_DEC;
+		double offset;
+		double RA;
+		double DEC;
 		std::string PI;
 		std::string comment;
 		int week;
-		std::string SSN;
-		int duration;
+		int SSN;
+		double duration;
 		int slew;
 		int saa;
-		int dup_RA;
-		int dup_DEC;
 		rocking_profile rock;
 	};
 
@@ -95,16 +93,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, target_name)
 	(std::string, PI)
 	(std::string, comment)
-	(std::string, offset)
-	(int, target_RA)
-	(int, target_DEC)
+	(double, offset)
+	(double, RA)
+	(double, DEC)
 	(int, week)
-	(std::string, SSN)
-	(int, duration)
+	(int, SSN)
+	(double, duration)
 	(int, slew)
 	(int, saa)
-	(int, dup_RA)
-	(int, dup_DEC)
 	(client::rocking_profile, rock)
 )
 
@@ -190,47 +186,12 @@ namespace client
 				>> lexeme[+(char_ - qi::eol) ]
 				;
 
-			week %=
+			offset %=
 				lit("//")
-				>> lit("week")
-				>> "="
-				>> qi::int_
-				>> qi::eol
-				;
-
-			SSN %=
-				lit("//")
-				>> lit("SSN")
-				>> "="
-				>> qi::int_
-				>> qi::eol
-				;
-
-			duration %=
-				lit("//")
-				>> lit("duration")
+				>> lit("offset")
 				>> "="
 				>> qi::double_
-				>> lit("ksec")
-				>> qi::eol
-				;
-
-			slew %=
-				lit("//")
-				>> lit("slew")
-				>> "="
-				>> qi::double_
-				>> lit("sec")
-				>> qi::eol
-				;
-
-			saa %=
-				lit("//")
-				>> lit("saa")
-				>> "="
-				>> qi::double_
-				>> lit("sec")
-				>> qi::eol
+				>> lit("deg")
 				;
 
 			RA %=
@@ -239,7 +200,6 @@ namespace client
 				>> "="
 				>> qi::double_
 				>> lit("deg")
-				>> qi::eol
 				;
 
 			DEC %=
@@ -248,8 +208,46 @@ namespace client
 				>> "="
 				>> qi::double_
 				>> lit("deg")
-				>> qi::eol
 				;
+
+			week %=
+				lit("//")
+				>> lit("week")
+				>> "="
+				>> qi::int_
+				;
+
+			SSN %=
+				lit("//")
+				>> lit("SSN")
+				>> "="
+				>> qi::int_
+				;
+
+			duration %=
+				lit("//")
+				>> lit("duration")
+				>> "="
+				>> qi::double_
+				>> lit("ksec")
+				;
+
+			slew %=
+				lit("//")
+				>> lit("slew")
+				>> "="
+				>> qi::int_
+				>> lit("sec")
+				;
+
+			saa %=
+				lit("//")
+				>> lit("saa")
+				>> "="
+				>> qi::int_
+				>> lit("sec")
+				;
+
 
 			/* rocking_profile %= */
 			/* 	lit("//") >> lit("Rocking Profile:") >> qi::eol */
@@ -259,17 +257,18 @@ namespace client
 
 			opt_evt_fields %=
 				prop_ID
-				|| target_name
-				|| PI
-				|| comment
-				/* || week */
-				/* || SSN */
-				/* || duration */
-				/* || slew */
-				/* || saa */
-				/* || RA */
-				/* || DEC */
-				/* || rocking_profile */
+				^ target_name
+				^ PI
+				^ comment
+				^ offset
+				^ RA
+				^ DEC
+				^ week
+				^ SSN
+				^ duration
+				^ slew
+				^ saa
+				/* ^ rocking_profile */
 				;
 
 			event %=
@@ -293,26 +292,30 @@ namespace client
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
-		typedef qi::rule<Iterator, int, ascii::space_type> double_rule;
+		typedef qi::rule<Iterator, double, ascii::space_type> double_rule;
 
 		string_rule timestamp;
 		string_rule event_name;
 		string_rule event_type;
 		string_rule obsnum;
 		string_rule obsid;
+
 		string_rule prop_ID;
 		string_rule target_name;
 		string_rule PI;
 		string_rule comment;
-		string_rule week;
-		string_rule SSN;
-		string_rule duration;
-		string_rule slew;
-		string_rule saa;
-		string_rule RA;
-		string_rule DEC;
-		string_rule rocking_profile;
 
+		double_rule RA;
+		double_rule DEC;
+		double_rule offset;
+		double_rule duration;
+
+		int_rule week;
+		int_rule SSN;
+		int_rule slew;
+		int_rule saa;
+
+		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
 		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
 	};
     //]
@@ -372,6 +375,14 @@ int main(int argc, char **argv)
 				<< "\ttarget_name: " << evt.additional.target_name << std::endl
 				<< "\tPI         : " << evt.additional.PI << std::endl
 				<< "\tcomment    : " << evt.additional.comment << std::endl
+				<< "\toffset     : " << evt.additional.offset  << std::endl
+				<< "\tRA         : " << evt.additional.RA      << std::endl
+				<< "\tDEC        : " << evt.additional.DEC     << std::endl
+				<< "\tweek       : " << evt.additional.week    << std::endl
+				<< "\tSSN        : " << evt.additional.SSN    << std::endl
+				<< "\tduration   : " << evt.additional.duration    << std::endl
+				<< "\tslew       : " << evt.additional.slew    << std::endl
+				<< "\tsaa        : " << evt.additional.saa    << std::endl
 				<< std::endl;
 		}
 		return 0;
