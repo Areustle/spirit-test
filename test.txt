@@ -6,4 +6,10 @@
 //                   RA          = 83.41139 deg
 //                   DEC         = 31.22504 deg
 //                   offset         = 50.2 deg
+//                   week        = 482
+//                   SSN         = 1
+//                   duration    = 0.600 ksec
+//                   slew        = 120 sec
+//                   saa         = 91740 sec
+
 // 2017/256:00:00:00 Obs End obs_number = Global

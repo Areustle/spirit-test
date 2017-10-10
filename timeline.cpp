@@ -37,7 +37,8 @@ namespace client
 	struct rocking_profile
 	{
 		std::string rockstart;
-		std::string rockdefault;
+		int rockstart_met;
+		double rockdefault;
 		std::vector<int> rocktime;
 		std::vector<double> rockangle;
 	};
@@ -59,16 +60,16 @@ namespace client
 		rocking_profile rock;
 	};
 
-  struct timeline_event
-  {
+	struct timeline_event
+	{
 		std::string timestamp;
-    std::string event_name;
-    std::string event_type;
+		std::string event_name;
+		std::string event_type;
 		std::string obs_number;
 
-					//Optional fields
+		//Optional fields
 		opt_evt_fields additional;
-  };
+	};
 
 	struct timeline
 	{
@@ -82,9 +83,10 @@ namespace client
 BOOST_FUSION_ADAPT_STRUCT(
 	client::rocking_profile,
 	(std::string, rockstart)
-	(std::string, rockdefault)
-	(std::vector<int>, rocktime)
-	(std::vector<double>, rockangle)
+	(int, rockstart_met)
+	(double, rockdefault)
+	/* (std::vector<int>, rocktime) */
+	/* (std::vector<double>, rockangle) */
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -105,12 +107,12 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::timeline_event,
-    (std::string, timestamp)
-    (std::string, event_name)
-    (std::string, event_type)
-    (std::string, obs_number)
-    (client::opt_evt_fields, additional)
+		client::timeline_event,
+		(std::string, timestamp)
+		(std::string, event_name)
+		(std::string, event_type)
+		(std::string, obs_number)
+		(client::opt_evt_fields, additional)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -249,11 +251,12 @@ namespace client
 				;
 
 
-			/* rocking_profile %= */
-			/* 	lit("//") >> lit("Rocking Profile:") >> qi::eol */
-
-			/* 	>> lit("//") >> lit("ROCKSTART") >> "=" */
-			/* 	; */
+			rocking_profile %=
+				lit("//") >> lit("Rocking Profile:")
+				>> lit("//") >> lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
+				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
+				/* >> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE") */
+				;
 
 			opt_evt_fields %=
 				prop_ID
@@ -268,7 +271,7 @@ namespace client
 				^ duration
 				^ slew
 				^ saa
-				/* ^ rocking_profile */
+				^ rocking_profile
 				;
 
 			event %=
@@ -318,7 +321,7 @@ namespace client
 		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
 		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
 	};
-    //]
+	//]
 }
 
 int main(int argc, char **argv)
@@ -383,6 +386,9 @@ int main(int argc, char **argv)
 				<< "\tduration   : " << evt.additional.duration    << std::endl
 				<< "\tslew       : " << evt.additional.slew    << std::endl
 				<< "\tsaa        : " << evt.additional.saa    << std::endl
+				<< "\t\trockstart		: " << evt.additional.rock.rockstart    << std::endl
+				<< "\t\trockstart_met		: " << evt.additional.rock.rockstart_met    << std::endl
+				<< "\t\trockdefault		: " << evt.additional.rock.rockdefault    << std::endl
 				<< std::endl;
 		}
 		return 0;
