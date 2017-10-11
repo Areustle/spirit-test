@@ -13,7 +13,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
+/* #include <boost/config/warning_disable.hpp> */
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -34,13 +34,23 @@ namespace client
 	namespace qi = boost::spirit::qi;
 	namespace ascii = boost::spirit::ascii;
 
+	struct rockprofile_line
+	{
+		int rocktime;
+		double rockangle;
+	};
+
+	struct rock_vect
+	{
+		std::vector<rockprofile_line> rocktime_angle;
+	};
+
 	struct rocking_profile
 	{
 		std::string rockstart;
 		int rockstart_met;
 		double rockdefault;
-		std::vector<int> rocktime;
-		std::vector<double> rockangle;
+		rock_vect profile;
 	};
 
 	struct opt_evt_fields
@@ -77,16 +87,23 @@ namespace client
 	};
 }
 
-// We need to tell fusion about our timeline struct
-// to make it a first-class fusion citizen. This has to
-// be in global scope.
+BOOST_FUSION_ADAPT_STRUCT(
+	client::rockprofile_line,
+	(int, rocktime)
+	(double, rockangle)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+	client::rock_vect,
+	(std::vector<client::rockprofile_line>, profile)
+)
+
 BOOST_FUSION_ADAPT_STRUCT(
 	client::rocking_profile,
 	(std::string, rockstart)
 	(int, rockstart_met)
 	(double, rockdefault)
-	/* (std::vector<int>, rocktime) */
-	/* (std::vector<double>, rockangle) */
+	(client::rock_vect, rocktime_angle)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -107,17 +124,17 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-		client::timeline_event,
-		(std::string, timestamp)
-		(std::string, event_name)
-		(std::string, event_type)
-		(std::string, obs_number)
-		(client::opt_evt_fields, additional)
+	client::timeline_event,
+	(std::string, timestamp)
+	(std::string, event_name)
+	(std::string, event_type)
+	(std::string, obs_number)
+	(client::opt_evt_fields, additional)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-		client::timeline,
-		(std::vector<client::timeline_event>, events)
+	client::timeline,
+	(std::vector<client::timeline_event>, events)
 )
 //]
 
@@ -250,12 +267,15 @@ namespace client
 				>> lit("sec")
 				;
 
+			rocktime_angle %= lit("//") >> int_ >> double_ ;
+			rock_vect %= +rocktime_angle;
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
 				>> lit("//") >> lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
 				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
-				/* >> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE") */
+				>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
+				>> rock_vect
 				;
 
 			opt_evt_fields %=
@@ -319,6 +339,8 @@ namespace client
 		int_rule saa;
 
 		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
+		qi::rule<Iterator, rock_vect(), ascii::space_type> rock_vect;
+		qi::rule<Iterator, rockprofile_line(), ascii::space_type> rocktime_angle;
 		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
 	};
 	//]
@@ -389,6 +411,8 @@ int main(int argc, char **argv)
 				<< "\t\trockstart		: " << evt.additional.rock.rockstart    << std::endl
 				<< "\t\trockstart_met		: " << evt.additional.rock.rockstart_met    << std::endl
 				<< "\t\trockdefault		: " << evt.additional.rock.rockdefault    << std::endl
+				<< "\t\trocktime  		: " << evt.additional.rock.rocktime_angle.rocktime[0] << std::endl
+				/* << "\t\trockangle		: " << evt.additional.rock.rockangle[0]    << std::endl */
 				<< std::endl;
 		}
 		return 0;
