@@ -5,6 +5,8 @@
 //                   comment     = 50deg 6am rock; orbit period 5715 sec; -/+ 50deg rock angle over 2 orbits
 //                   RA          = 83.41139 deg
 //                   DEC         = 31.22504 deg
+//                   RA          = 83.41139 deg
+//                   DEC         = 31.22504 deg
 //                   offset         = 50.2 deg
 //                   week        = 482
 //                   SSN         = 1

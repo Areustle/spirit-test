@@ -13,7 +13,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
+/* #include <boost/config/warning_disable.hpp> */
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -257,7 +257,8 @@ namespace client
 				>> lit("sec")
 				;
 
-			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
+			rocktime_angle %= lit("//") >> qi::omit[digit >> digit]
+				>> int_ >> double_ ;
 
 
 			rocking_profile %=
