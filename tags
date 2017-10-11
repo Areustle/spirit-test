@@ -81,27 +81,24 @@ operator ()	examples/minixml.cpp	/^        void operator()(std::string const& te
 operator ()	examples/minixml.cpp	/^    void mini_xml_printer::operator()(mini_xml const& xml) const$/;"	f	class:client::mini_xml_printer
 opt_evt_fields	timeline.cpp	/^		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;$/;"	m	struct:client::timeline_grammar	file:
 opt_evt_fields	timeline.cpp	/^	struct opt_evt_fields$/;"	s	namespace:client	file:
+pairs	timeline.cpp	/^		std::vector<rockprofile_pair> pairs;$/;"	m	struct:client::rocking_profile	file:
 parse_numbers	examples/num_list1.cpp	/^    bool parse_numbers(Iterator first, Iterator last)$/;"	f	namespace:client
 print	examples/actions.cpp	/^        void print(int const& i) const$/;"	f	struct:client::writer
 print	examples/actions.cpp	/^    void print(int const& i)$/;"	f	namespace:client
 print_action	examples/actions.cpp	/^    struct print_action$/;"	s	namespace:client	file:
-profile	timeline.cpp	/^		rock_vect profile;$/;"	m	struct:client::rocking_profile	file:
+profile	timeline.cpp	/^		rocking_profile profile;$/;"	m	struct:client::opt_evt_fields	file:
 prop_ID	timeline.cpp	/^		std::string prop_ID;$/;"	m	struct:client::opt_evt_fields	file:
 prop_ID	timeline.cpp	/^		string_rule prop_ID;$/;"	m	struct:client::timeline_grammar	file:
 quoted_string	examples/employee.cpp	/^        qi::rule<Iterator, std::string(), ascii::space_type> quoted_string;$/;"	m	struct:client::employee_parser	file:
-rock	timeline.cpp	/^		rocking_profile rock;$/;"	m	struct:client::opt_evt_fields	file:
-rock_vect	timeline.cpp	/^		qi::rule<Iterator, rock_vect(), ascii::space_type> rock_vect;$/;"	m	struct:client::timeline_grammar	file:
-rock_vect	timeline.cpp	/^	struct rock_vect$/;"	s	namespace:client	file:
-rockangle	timeline.cpp	/^		double rockangle;$/;"	m	struct:client::rockprofile_line	file:
+rockangle	timeline.cpp	/^		double rockangle;$/;"	m	struct:client::rockprofile_pair	file:
 rockdefault	timeline.cpp	/^		double rockdefault;$/;"	m	struct:client::rocking_profile	file:
 rocking_profile	timeline.cpp	/^		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;$/;"	m	struct:client::timeline_grammar	file:
 rocking_profile	timeline.cpp	/^	struct rocking_profile$/;"	s	namespace:client	file:
-rockprofile_line	timeline.cpp	/^	struct rockprofile_line$/;"	s	namespace:client	file:
+rockprofile_pair	timeline.cpp	/^	struct rockprofile_pair$/;"	s	namespace:client	file:
 rockstart	timeline.cpp	/^		std::string rockstart;$/;"	m	struct:client::rocking_profile	file:
 rockstart_met	timeline.cpp	/^		int rockstart_met;$/;"	m	struct:client::rocking_profile	file:
-rocktime	timeline.cpp	/^		int rocktime;$/;"	m	struct:client::rockprofile_line	file:
-rocktime_angle	timeline.cpp	/^		qi::rule<Iterator, rockprofile_line(), ascii::space_type> rocktime_angle;$/;"	m	struct:client::timeline_grammar	file:
-rocktime_angle	timeline.cpp	/^		std::vector<rockprofile_line> rocktime_angle;$/;"	m	struct:client::rock_vect	file:
+rocktime	timeline.cpp	/^		int rocktime;$/;"	m	struct:client::rockprofile_pair	file:
+rocktime_angle	timeline.cpp	/^		qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;$/;"	m	struct:client::timeline_grammar	file:
 roman	examples/roman.cpp	/^        roman() : roman::base_type(start)$/;"	f	struct:client::roman
 roman	examples/roman.cpp	/^    struct roman : qi::grammar<Iterator, unsigned()>$/;"	s	namespace:client	file:
 saa	timeline.cpp	/^		int saa;$/;"	m	struct:client::opt_evt_fields	file:

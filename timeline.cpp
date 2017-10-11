@@ -13,7 +13,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/* #include <boost/config/warning_disable.hpp> */
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -34,15 +34,10 @@ namespace client
 	namespace qi = boost::spirit::qi;
 	namespace ascii = boost::spirit::ascii;
 
-	struct rockprofile_line
+	struct rockprofile_pair
 	{
 		int rocktime;
 		double rockangle;
-	};
-
-	struct rock_vect
-	{
-		std::vector<rockprofile_line> rocktime_angle;
 	};
 
 	struct rocking_profile
@@ -50,7 +45,7 @@ namespace client
 		std::string rockstart;
 		int rockstart_met;
 		double rockdefault;
-		rock_vect profile;
+		std::vector<rockprofile_pair> pairs;
 	};
 
 	struct opt_evt_fields
@@ -67,7 +62,7 @@ namespace client
 		double duration;
 		int slew;
 		int saa;
-		rocking_profile rock;
+		rocking_profile profile;
 	};
 
 	struct timeline_event
@@ -88,14 +83,9 @@ namespace client
 }
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::rockprofile_line,
+	client::rockprofile_pair,
 	(int, rocktime)
 	(double, rockangle)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-	client::rock_vect,
-	(std::vector<client::rockprofile_line>, profile)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -103,7 +93,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, rockstart)
 	(int, rockstart_met)
 	(double, rockdefault)
-	(client::rock_vect, rocktime_angle)
+	(std::vector<client::rockprofile_pair>, pairs)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -120,7 +110,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(double, duration)
 	(int, slew)
 	(int, saa)
-	(client::rocking_profile, rock)
+	(client::rocking_profile, profile)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -267,15 +257,15 @@ namespace client
 				>> lit("sec")
 				;
 
-			rocktime_angle %= lit("//") >> int_ >> double_ ;
-			rock_vect %= +rocktime_angle;
+			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
+
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
 				>> lit("//") >> lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
 				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
 				>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
-				>> rock_vect
+				>> repeat(17)[rocktime_angle]
 				;
 
 			opt_evt_fields %=
@@ -312,6 +302,15 @@ namespace client
 		// Components of a timeline
 		qi::rule<Iterator, timeline_event(), ascii::space_type> event;
 
+		// Optional fields of event struct
+		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
+
+		// The rocking profile
+		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
+
+		// The time,angle pair of a rocking profile
+		qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;
+
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
@@ -338,10 +337,6 @@ namespace client
 		int_rule slew;
 		int_rule saa;
 
-		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
-		qi::rule<Iterator, rock_vect(), ascii::space_type> rock_vect;
-		qi::rule<Iterator, rockprofile_line(), ascii::space_type> rocktime_angle;
-		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
 	};
 	//]
 }
@@ -408,12 +403,17 @@ int main(int argc, char **argv)
 				<< "\tduration   : " << evt.additional.duration    << std::endl
 				<< "\tslew       : " << evt.additional.slew    << std::endl
 				<< "\tsaa        : " << evt.additional.saa    << std::endl
-				<< "\t\trockstart		: " << evt.additional.rock.rockstart    << std::endl
-				<< "\t\trockstart_met		: " << evt.additional.rock.rockstart_met    << std::endl
-				<< "\t\trockdefault		: " << evt.additional.rock.rockdefault    << std::endl
-				<< "\t\trocktime  		: " << evt.additional.rock.rocktime_angle.rocktime[0] << std::endl
-				/* << "\t\trockangle		: " << evt.additional.rock.rockangle[0]    << std::endl */
-				<< std::endl;
+				<< "\t\trockstart		: " << evt.additional.profile.rockstart    << std::endl
+				<< "\t\trockstart_met		: " << evt.additional.profile.rockstart_met    << std::endl
+				<< "\t\trockdefault		: " << evt.additional.profile.rockdefault    << std::endl
+				;
+				for (auto rockpair : evt.additional.profile.pairs) {
+					std::cout
+					<< "\t\trocktime  : " << rockpair.rocktime << std::endl
+					<< "\t\trockangle : " << rockpair.rockangle    << std::endl
+					;
+				}
+				std::cout << std::endl;
 		}
 		return 0;
 	}
