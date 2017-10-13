@@ -13,7 +13,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/* #include <boost/config/warning_disable.hpp> */
+#include <boost/config/warning_disable.hpp> 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -76,10 +76,29 @@ namespace client
 		opt_evt_fields additional;
 	};
 
+        struct timeline_header
+	{
+	  std::string filename;
+	  std::string creation_time;
+	  std::string mission_id;
+	  std::string originator;
+	  std::string db_version;
+	  std::string dest_processor;
+	  std::string start_time;
+	  std::string stop_time;
+	  std::string execute_flag;
+	  std::string timeline_type;
+	  std::string version_num;
+	  std::string ref_timeline_name;
+	  std::string comment;
+	};
+
+  
 	struct timeline
 	{
 		std::vector<timeline_event> events;
-	};
+	        timeline_header header;
+	};  
 }
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -123,7 +142,25 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+       client::timeline_header,
+       (std::string, filename)
+       (std::string, creation_time)
+       (std::string, mission_id)
+       (std::string, originator)
+       (std::string, db_version)
+       (std::string, dest_processor)
+       (std::string, start_time)
+       (std::string, stop_time)
+       (std::string, execute_flag)
+       (std::string, timeline_type)
+       (std::string, version_num)
+       (std::string, ref_timeline_name)
+       (std::string, comment)
+)
+       
+BOOST_FUSION_ADAPT_STRUCT(
 	client::timeline,
+	(client::timeline_header, header)
 	(std::vector<client::timeline_event>, events)
 )
 //]
@@ -145,6 +182,8 @@ namespace client
 			using ascii::digit;
 			using ascii::space;
 			using ascii::string;
+			using qi::alnum;
+			using qi::blank;
 
 			timestamp %=
 				repeat(4)[digit] >> char_("/")
@@ -221,7 +260,7 @@ namespace client
 
 			week %=
 				lit("//")
-				>> lit("week")
+			        >> lit("week")
 				>> "="
 				>> qi::int_
 				;
@@ -285,6 +324,12 @@ namespace client
 				^ rocking_profile
 				;
 
+			file_name %=
+			  +(alnum | char_("_") | char_("."))
+			  ;
+
+			
+			
 			event %=
 				lit("//")
 				>> timestamp
@@ -294,7 +339,37 @@ namespace client
 				>> -opt_evt_fields
 				;
 
-			timeline %= +event >> qi::eoi;
+			header %=
+			  file_name
+			  >> ","
+			  >> timestamp
+			  >> ","
+			  >> *alnum
+			  >> ","
+			  >> lexeme[+(alnum | (blank -qi::eol))]
+			  >> ","
+			  >> +(alnum | char_(".")) | (+blank -qi::eol)
+			  >> ","
+			  >> +(alnum | blank)
+			  >> ","
+			  >> timestamp
+			  >> ","
+			  >> timestamp
+			  >> ","
+			  >> +(alnum | blank)
+			  >> ","
+			  >> +(alnum | blank)
+			  >> ","
+			  >> qi::repeat(2)[digit]
+			  >> ","
+			  >> file_name
+			  >> ","
+			  >> comment
+			  ;
+			  
+			
+			timeline %= -header >> +event >> qi::eoi;
+			
 		}
 
 		// Start Rule for timelines
@@ -312,6 +387,9 @@ namespace client
 		// The time,angle pair of a rocking profile
 		qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;
 
+	        // Header information for the input timeline
+	        qi::rule<Iterator, timeline_header(), ascii::space_type> header;
+	        
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
@@ -322,7 +400,8 @@ namespace client
 		string_rule event_type;
 		string_rule obsnum;
 		string_rule obsid;
-
+	        string_rule file_name;
+	  
 		string_rule prop_ID;
 		string_rule target_name;
 		string_rule PI;
@@ -337,6 +416,8 @@ namespace client
 		int_rule SSN;
 		int_rule slew;
 		int_rule saa;
+
+	  
 
 	};
 	//]
@@ -429,3 +510,4 @@ int main(int argc, char **argv)
 		return 1;
 	}
 }
+B
