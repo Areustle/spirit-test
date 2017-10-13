@@ -54,7 +54,9 @@ namespace client
 		std::string target_name;
 		double offset;
 		double RA;
+		double dupRA;
 		double DEC;
+		double dupDEC;
 		std::string PI;
 		std::string comment;
 		int week;
@@ -104,7 +106,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, comment)
 	(double, offset)
 	(double, RA)
+	(double, dupRA)
 	(double, DEC)
+	(double, dupDEC)
 	(int, week)
 	(int, SSN)
 	(double, duration)
@@ -213,7 +217,7 @@ namespace client
 
 			DEC %=
 				lit("//")
-				>> lit("DEC")
+				>> qi::omit[ qi::no_case["DEC"] ]
 				>> "="
 				>> qi::double_
 				>> lit("deg")
@@ -275,6 +279,8 @@ namespace client
 				^ PI
 				^ comment
 				^ offset
+				^ RA
+				^ DEC
 				^ RA
 				^ DEC
 				^ week
