@@ -78,9 +78,30 @@ namespace client
 		opt_evt_fields additional;
 	};
 
+	struct input_files{
+	};
+
+	struct initial{
+		int week;
+		std::string timeline_name;
+		std::string create_time;
+		std::string creator;
+		double RA;
+		double DEC;
+		rocking_profile profile;
+		timeline_event event;
+		std::vector<std::string> tako_db;
+		std::vector<std::string> sc_ephem;
+		std::vector<std::string> saa;
+		std::vector<std::string> tdrss_ephem;
+		std::vector<std::string> tdrss_sched;
+		std::string prev_arr_thresh;
+	};
+
 	struct timeline
 	{
 		std::vector<timeline_event> events;
+		initial init;
 	};
 }
 
@@ -118,6 +139,26 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+	client::initial,
+	(int, week)
+	(std::string, timeline_name)
+	(std::string, create_time)
+	(std::string, creator)
+	(double, RA)
+	(double, DEC)
+	(client::rocking_profile, profile)
+	(client::timeline_event, event)
+	(std::vector<std::string>, tako_db)
+	(std::vector<std::string>, sc_ephem)
+	(std::vector<std::string>, saa)
+	(std::vector<std::string>, tdrss_ephem)
+	(std::vector<std::string>, tdrss_sched)
+	(std::string, prev_arr_thresh)
+)
+				/* initial %= */
+
+
+BOOST_FUSION_ADAPT_STRUCT(
 	client::timeline_event,
 	(std::string, timestamp)
 	(std::string, event_name)
@@ -128,6 +169,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	client::timeline,
+	(client::initial, init)
 	(std::vector<client::timeline_event>, events)
 )
 //]
@@ -156,151 +198,92 @@ namespace client
 				>> repeat(3)[ char_(":") >> qi::repeat(2)[digit] ]
 				;
 
-			event_name %=
-				string("Survey")
-				| string("Obs")
-				| string("Profile")
-				;
+			one_liner %= lexeme[+(char_ - qi::eol)];
 
-			event_type %=
-				string("Begin")
-				| string("End")
-				;
+			event_name %= string("Survey") | string("Obs") | string("Profile") ;
+
+			event_type %= string("Begin") | string("End") ;
 
 			obsid %= lexeme[ string("Global") | +(digit | char_("-")) ];
 
 			obsnum %= lit("obs_number") >> "=" >> obsid;
 
-			prop_ID %=
-				lit("//")
-				>> lit("prop_ID")
-				>> "="
-				>> +digit
-				;
+			prop_ID %= lit("//") >> lit("prop_ID") >> "=" >> +digit ;
 
-			target_name %=
-				lit("//")
-				>> lit("target_name")
-				>> "="
-				>> lexeme[+(char_ - qi::eol) ]
-				;
+			target_name %= lit("//") >> lit("target_name") >> "=" >> one_liner ;
 
-			PI %=
-				lit("//")
-				>> lit("PI")
-				>> "="
-				>> lexeme[+(char_ - qi::eol) ]
-				;
+			PI %= lit("//") >> lit("PI") >> "=" >> one_liner ;
 
-			comment %=
-				lit("//")
-				>> lit("comment")
-				>> "="
-				>> lexeme[+(char_ - qi::eol) ]
-				;
+			comment %= lit("//") >> lit("comment") >> "=" >> one_liner ;
 
-			offset %=
-				lit("//")
-				>> lit("offset")
-				>> "="
-				>> qi::double_
-				>> lit("deg")
-				;
+			offset %= lit("//") >> lit("offset") >> "=" >> qi::double_ >> lit("deg") ;
 
-			RA %=
-				lit("//")
-				>> lit("RA")
-				>> "="
-				>> qi::double_
-				>> lit("deg")
-				;
+			RA %= lit("//") >> lit("RA") >> "=" >> qi::double_ >> -lit("deg") ;
 
-			DEC %=
-				lit("//")
-				>> qi::omit[ qi::no_case["DEC"] ]
-				>> "="
-				>> qi::double_
-				>> lit("deg")
-				;
+			DEC %= lit("//") >> qi::omit[ qi::no_case["DEC"] ] >> "="
+				>> qi::double_ >> -lit("deg") ;
 
-			week %=
-				lit("//")
-				>> lit("week")
-				>> "="
-				>> qi::int_
-				;
+			week %= lit("//") >> lit("week") >> "=" >> qi::int_ ;
 
-			SSN %=
-				lit("//")
-				>> lit("SSN")
-				>> "="
-				>> qi::int_
-				;
+			SSN %= lit("//") >> lit("SSN") >> "=" >> qi::int_ ;
 
-			duration %=
-				lit("//")
-				>> lit("duration")
-				>> "="
-				>> qi::double_
-				>> lit("ksec")
-				;
+			duration %= lit("//") >> lit("duration") >> "=" >> qi::double_
+				>> lit("ksec") ;
 
-			slew %=
-				lit("//")
-				>> lit("slew")
-				>> "="
-				>> qi::int_
-				>> lit("sec")
-				;
+			slew %= lit("//") >> lit("slew") >> "=" >> qi::int_ >> lit("sec") ;
 
-			saa %=
-				lit("//")
-				>> lit("saa")
-				>> "="
-				>> qi::int_
-				>> lit("sec")
-				;
+			saa %= lit("//") >> lit("saa") >> "=" >> qi::int_ >> lit("sec") ;
 
-			rocktime_angle %= lit("//") >> qi::omit[digit >> digit]
-				>> int_ >> double_ ;
-
+			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
-				>> lit("//") >> lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
+				>> lit("//")>>lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
 				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
 				>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
 				>> repeat(17)[rocktime_angle]
 				;
 
 			opt_evt_fields %=
-				prop_ID
-				^ target_name
-				^ PI
-				^ comment
-				^ offset
-				^ RA
-				^ DEC
-				^ RA
-				^ DEC
-				^ week
-				^ SSN
-				^ duration
-				^ slew
-				^ saa
-				^ rocking_profile
-				;
+				prop_ID ^ target_name ^ PI ^ comment ^ offset ^ RA ^ DEC ^ RA ^ DEC
+				^ week ^ SSN ^ duration ^ slew ^ saa ^ rocking_profile ;
 
 			event %=
 				lit("//")
-				>> timestamp
-				>> event_name
-				>> event_type
-				>> obsnum
-				>> -opt_evt_fields
+				>> timestamp >> event_name >> event_type >> obsnum >> -opt_evt_fields
 				;
 
-			timeline %= +event >> qi::eoi;
+			file_path %=
+				lexeme[ +( -char_("/") >> +(qi::graph - char_("/") - char_(".")) )
+				>> char_(".") >> +qi::alnum ];
+			/* file_path %= lexeme[ +(qi::graph - char_("/") - qi::eol) ]; */
+			/* file_path %= string("TOKEN"); */
+
+			initial %=
+				lit("//") >> "Mission Week:" >> int_
+				>> "//" >> "Timeline Name:" >> lexeme[+(qi::graph)]
+				>> lit("Created:") >> timestamp
+				>> "//" >> "Created with" >> one_liner
+				>> "//" >> "Initial pointing" >> RA >> DEC
+				>> "//" >> "Initial survey-related flight parameter settings"
+				>> rocking_profile
+				>> -event
+				>> "//"
+				>> "//" >> "Input files:"
+				>> "//" >> "TAKO database:" >> file_path % lit("//")
+				>> "//" >> "Spacecraft ephemeris:" >> file_path % lit("//")
+				>> "//" >> "SAA:" >> file_path % lit("//")
+				>> "//" >> "TDRSS ephemeris:" >> file_path % lit("//")
+				>> "//" >> "TDRSS contact schedule:" >> file_path % lit("//")
+				>> "//"
+				>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
+				;
+
+			timeline %=
+				-initial
+				>> +event
+				>> qi::eoi
+				;
 		}
 
 		// Start Rule for timelines
@@ -318,10 +301,17 @@ namespace client
 		// The time,angle pair of a rocking profile
 		qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;
 
+		// The initial annotation section containing initial pointing and
+		// initial survey rocking profile
+		qi::rule<Iterator, initial(), ascii::space_type> initial;
+
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
 		typedef qi::rule<Iterator, double, ascii::space_type> double_rule;
+
+		string_rule one_liner;
+		string_rule file_path;
 
 		string_rule timestamp;
 		string_rule event_name;
@@ -416,13 +406,33 @@ int main(int argc, char **argv)
 				;
 				for (auto rockpair : evt.additional.profile.pairs) {
 					std::cout
-					<< "\t\trocktime  : " << rockpair.rocktime << std::endl
-					<< "\t\trockangle : " << rockpair.rockangle    << std::endl
+					<< "\t\trockpair  : "<<rockpair.rocktime<<" "
+					<< rockpair.rockangle << std::endl
 					;
 				}
 				std::cout << std::endl;
 		}
-		return 0;
+		std::cout << tl.init.week << std::endl;
+		std::cout << tl.init.timeline_name << std::endl;
+		std::cout << tl.init.create_time << std::endl;
+		std::cout << tl.init.creator << std::endl;
+		std::cout << tl.init.RA << std::endl;
+		std::cout << tl.init.DEC << std::endl;
+		for (auto db : tl.init.tako_db) std::cout <<"\t"<< db << std::endl;
+		std::cout << std::endl;
+		for (auto db : tl.init.sc_ephem)std::cout <<"\t"<< db << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		for (auto db : tl.init.saa) std::cout <<"\t"<< db << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		for (auto db : tl.init.tdrss_ephem) std::cout <<"\t"<< db << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		for (auto db : tl.init.tdrss_sched) std::cout <<"\t"<< db << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << tl.init.prev_arr_thresh << std::endl;
 	}
 	else
 	{

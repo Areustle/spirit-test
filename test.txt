@@ -1,3 +1,50 @@
+// Mission Week: 482
+// Timeline Name: S482_2017236ATS.00      Created: 2017/230:11:48:21
+// Created with GLAST TAKO Version 5.20.6
+
+// Initial pointing
+//                  RA = 87.261844
+//                  Dec = 36.696359
+// Initial survey-related flight parameter settings
+//                  Rocking Profile:
+//                       ROCKSTART   = 2017/228:22:06:00 (524613962)
+//                       ROCKDEFAULT = 0.000000
+//                           ROCKTIME   ROCKANGLE
+//                       01         0    0.000000
+//                       02       190   38.000000
+//                       03       230   46.000000
+//                       04       270   50.000000
+//                       05      3000   50.000000
+//                       06      5445   50.000000
+//                       07      5485   46.000000
+//                       08      5525   38.000000
+//                       09      5715    0.000000
+//                       10      5905  -38.000000
+//                       11      5945  -46.000000
+//                       12      5985  -50.000000
+//                       13      9982  -50.000000
+//                       14     11160  -50.000000
+//                       15     11200  -46.000000
+//                       16     11240  -38.000000
+//                       17     11430    0.000000
+// 2017/236:00:00:00 Profile    End   obs_number = 100400-1-1
+//
+// Input files:
+// TAKO database: targ_week482_Final_00_DB.tcl
+// Spacecraft ephemeris: /data/ops/opsdata/current/ephemeris/GLAST_EPH_2017226_2017268_00.txt
+// SAA: /data/ops/opsdata/saa_definitions/L_SAA_2008198.03
+// TDRSS ephemeris: /data/ops/opsdata/current/ephemeris/TDE_EPH_2017226_2017268_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TDW_EPH_2017226_2017268_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TD171_EPH_2017226_2017268_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TD275_EPH_2017226_2017268_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TDS_EPH_2017226_2017268_00.txt
+// TDRSS contact schedule: /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017227124113.txt
+//                         /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017226204544.txt
+//                         /data/ops/opsdata/current/tdrss/TSR_2017240_00.txt
+//                         /data/ops/opsdata/current/tdrss/TSR_2017233_00.txt
+//
+// Previous ARR Threshold was LOW
+
 // 2017/255:01:23:45 Obs Begin obs_number = Global
 //                   prop_ID     = 100400
 //                   PI          = Fermi
