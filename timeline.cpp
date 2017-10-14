@@ -259,6 +259,8 @@ namespace client
 			/* file_path %= lexeme[ +(qi::graph - char_("/") - qi::eol) ]; */
 			/* file_path %= string("TOKEN"); */
 
+			divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
+
 			initial %=
 				lit("//") >> "Mission Week:" >> int_
 				>> "//" >> "Timeline Name:" >> lexeme[+(qi::graph)]
@@ -279,9 +281,9 @@ namespace client
 				>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
 				;
 
-			timeline %=
-				-initial
-				>> +event
+			timeline %= *divider
+				>> -initial >> *divider
+				>> +event >> *divider
 				>> qi::eoi
 				;
 		}
@@ -305,6 +307,7 @@ namespace client
 		// initial survey rocking profile
 		qi::rule<Iterator, initial(), ascii::space_type> initial;
 
+		qi::rule<Iterator, void(), ascii::space_type> divider;
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
