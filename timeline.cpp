@@ -422,7 +422,8 @@ struct timeline_grammar : qi::grammar<Iterator, timeline(), ascii::space_type>
 			>> ";"
 			;
 
-		generic_comment %= lit("//")
+		generic_comment %= !(event | initial)
+		        >> lit("//")
 		        >> one_liner
 		        ;
 		
