@@ -58,6 +58,10 @@ S482_2017236ATS.00,2017/230:11:48:21,GLAST,GSSC,NA,SCP,
 
 // ---------------------------------------------------
 
+2017/236:00:35:01 CMD SMFPFLOAT (PARAMID = FPVSGROCKDEFAULT, VALUE = 0.000000);
+
+
+
 // 2017/255:01:23:45 Obs Begin obs_number = Global
 //                   prop_ID     = 100400
 //                   PI          = Fermi

@@ -111,12 +111,21 @@ namespace client
 		std::string ref_timeline_name;
 		std::string comment;
 	};
-
+  
+        struct command
+	{
+	        std::string time;
+	        std::string type;
+	        std::string order;
+	        //std::vector<std::string> params;
+	        std::string params;
+	};
 
 	struct timeline
 	{
 		timeline_header header;
 		initial init;
+	  //std::vector<command> commands;
 		std::vector<timeline_event> events;
 	};
 }
@@ -184,6 +193,16 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+        client::command,
+	(std::string, time)
+	(std::string, type)
+	(std::string, order)
+	//(std::vector<std::string>,  params)
+	(std::string, params)
+)
+
+
+BOOST_FUSION_ADAPT_STRUCT(
 	client::timeline_header,
 	(std::string, filename)
 	(std::string, creation_time)
@@ -191,7 +210,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, originator)
 	(std::string, db_version)
 	(std::string, dest_processor)
-	(std::string, start_time)
+        (std::string, start_time)
 	(std::string, stop_time)
 	(std::string, execute_flag)
 	(std::string, timeline_type)
@@ -204,6 +223,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	client::timeline,
 	(client::timeline_header, header)
 	(client::initial, init)
+	//(std::vector<client::command>, commands)
 	(std::vector<client::timeline_event>, events)
 )
 //]
@@ -348,39 +368,70 @@ struct timeline_grammar : qi::grammar<Iterator, timeline(), ascii::space_type>
 			>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
 			;
 
+		command %=
+		        timestamp
+		        >> (string("CMD") | string("ACT"))
+		        >> lexeme[+alnum]
+			>> "("
+		  //>> (+(char_ - char_(",")))  % lit(",")
+		        >> lexeme[+(char_ - char_(")"))]
+			>> ")"
+			>>";"
+		        ;
+
+		
 		header %=
+		  //File name
 			file_name
 			>> ","
+		  //Creation Time
 			>> timestamp
 			>> ","
+		  //Mission ID
 			>> *alnum
 			>> ","
+		  //Originator
 			>> lexeme[+(alnum | (blank -qi::eol))]
+		  	>> ","
+		  //DB Version
+			>> *(alnum | char_("."))
 			>> ","
-			>> +(alnum | char_(".")) | (+blank -qi::eol)
+		  //Destination Processor
+			>> *alnum
 			>> ","
-			>> +(alnum | blank)
-			>> ","
+		  //Start Time
 			>> timestamp
 			>> ","
-			>> timestamp
+		  //Stop Time
+		        >> timestamp
 			>> ","
-			>> +(alnum | blank)
+		  //Execute Flag
+			>> *alnum
 			>> ","
-			>> +(alnum | blank)
+		  //Timeline Type
+			>> *alnum
 			>> ","
+		  //Version Number
 			>> qi::repeat(2)[digit]
 			>> ","
+		  //Reference Timeline File Name
 			>> file_name
 			>> ","
-			>> comment
+		  //Comment
+			>> lexeme[+(char_-";")]
+			>> ";"
 			;
 
+		generic_comment %= lit("//")
+		        >> one_liner
+		        ;
+		
+		ignored %= divider | command | generic_comment;
 
-		timeline %= *divider
-			>> -header >> *divider
-			>> -initial >> *divider
-			>> +event >> *divider
+		timeline %= *ignored
+		        >> -header >> *ignored
+			>> -initial >> *ignored
+		        >> +event >> *ignored
 			>> qi::eoi
 			;
 	}
@@ -407,6 +458,15 @@ struct timeline_grammar : qi::grammar<Iterator, timeline(), ascii::space_type>
 	// A divider string that should not be parsed
 	qi::rule<Iterator, void(), ascii::space_type> divider;
 
+        // Catch all for unneeded parsed data  
+        qi::rule<Iterator, void(), ascii::space_type> ignored;  
+
+        // Generic unused comments in the timeline
+        qi::rule<Iterator, void(), ascii::space_type> generic_comment;
+  
+        // Spacecraft command parsers 
+        qi::rule<Iterator, void(), ascii::space_type> command;
+  
 	// Header information for the input timeline
 	qi::rule<Iterator, timeline_header(), ascii::space_type> header;
 
@@ -489,6 +549,20 @@ int main(int argc, char **argv)
 		std::cout << "-------------------------\n";
 		std::cout << "Parsing succeeded\n";
 		std::cout << "-------------------------\n";
+		std::cout << tl.header.filename << std::endl;
+		std::cout << tl.header.creation_time << std::endl;
+		std::cout << tl.header.mission_id << std::endl;
+		std::cout << tl.header.originator << std::endl;
+		std::cout << tl.header.db_version << std::endl;
+		std::cout << tl.header.dest_processor << std::endl;
+		std::cout << tl.header.start_time << std::endl;
+		std::cout << tl.header.stop_time << std::endl;
+	        std::cout << tl.header.execute_flag << std::endl;
+		std::cout << tl.header.timeline_type << std::endl;
+		std::cout << tl.header.version_num << std::endl;
+		std::cout << tl.header.ref_timeline_name << std::endl;
+		std::cout << tl.header.comment << std::endl;
+		
 		for (auto evt : tl.events ){
 			/* std::cout << "got: " << boost::fusion::as_vector(evt) << std::endl; */
 			std::cout
