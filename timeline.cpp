@@ -192,49 +192,77 @@ namespace client
 			using ascii::space;
 			using ascii::string;
 
+
+			file_path %=
+				lexeme[ +( -char_("/") >> +(qi::graph - char_("/") - char_(".")) )
+				>> char_(".") >> +qi::alnum ];
+
+
+			divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
+
+
 			timestamp %=
 				repeat(4)[digit] >> char_("/")
 				>> repeat(3)[digit]
 				>> repeat(3)[ char_(":") >> qi::repeat(2)[digit] ]
 				;
 
+
 			one_liner %= lexeme[+(char_ - qi::eol)];
+
 
 			event_name %= string("Survey") | string("Obs") | string("Profile") ;
 
+
 			event_type %= string("Begin") | string("End") ;
+
 
 			obsid %= lexeme[ string("Global") | +(digit | char_("-")) ];
 
+
 			obsnum %= lit("obs_number") >> "=" >> obsid;
+
 
 			prop_ID %= lit("//") >> lit("prop_ID") >> "=" >> +digit ;
 
+
 			target_name %= lit("//") >> lit("target_name") >> "=" >> one_liner ;
+
 
 			PI %= lit("//") >> lit("PI") >> "=" >> one_liner ;
 
+
 			comment %= lit("//") >> lit("comment") >> "=" >> one_liner ;
+
 
 			offset %= lit("//") >> lit("offset") >> "=" >> qi::double_ >> lit("deg") ;
 
+
 			RA %= lit("//") >> lit("RA") >> "=" >> qi::double_ >> -lit("deg") ;
+
 
 			DEC %= lit("//") >> qi::omit[ qi::no_case["DEC"] ] >> "="
 				>> qi::double_ >> -lit("deg") ;
 
+
 			week %= lit("//") >> lit("week") >> "=" >> qi::int_ ;
 
+
 			SSN %= lit("//") >> lit("SSN") >> "=" >> qi::int_ ;
+
 
 			duration %= lit("//") >> lit("duration") >> "=" >> qi::double_
 				>> lit("ksec") ;
 
+
 			slew %= lit("//") >> lit("slew") >> "=" >> qi::int_ >> lit("sec") ;
+
 
 			saa %= lit("//") >> lit("saa") >> "=" >> qi::int_ >> lit("sec") ;
 
+
 			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
+
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
@@ -244,22 +272,17 @@ namespace client
 				>> repeat(17)[rocktime_angle]
 				;
 
+
 			opt_evt_fields %=
 				prop_ID ^ target_name ^ PI ^ comment ^ offset ^ RA ^ DEC ^ RA ^ DEC
 				^ week ^ SSN ^ duration ^ slew ^ saa ^ rocking_profile ;
+
 
 			event %=
 				lit("//")
 				>> timestamp >> event_name >> event_type >> obsnum >> -opt_evt_fields
 				;
 
-			file_path %=
-				lexeme[ +( -char_("/") >> +(qi::graph - char_("/") - char_(".")) )
-				>> char_(".") >> +qi::alnum ];
-			/* file_path %= lexeme[ +(qi::graph - char_("/") - qi::eol) ]; */
-			/* file_path %= string("TOKEN"); */
-
-			divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
 
 			initial %=
 				lit("//") >> "Mission Week:" >> int_
@@ -307,7 +330,9 @@ namespace client
 		// initial survey rocking profile
 		qi::rule<Iterator, initial(), ascii::space_type> initial;
 
+		// A divider string that should not be parsed
 		qi::rule<Iterator, void(), ascii::space_type> divider;
+
 		// Sub-parsers
 		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
 		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
