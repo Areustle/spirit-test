@@ -3,7 +3,7 @@
 
 	Distributed under the Boost Software License, Version 1.0. (See accompanying
 	file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-=============================================================================*/
+	=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  A parser for arbitrary tuples. This example presents a parser
@@ -111,399 +111,323 @@ namespace client
 		std::string ref_timeline_name;
 		std::string comment;
 	};
-  
-        struct command
+
+	struct command
 	{
-	        std::string time;
-	        std::string type;
-	        std::string order;
-	        //std::vector<std::string> params;
-	        std::string params;
+		std::string time;
+		std::string type;
+		std::string order;
+		//std::vector<std::string> params;
+		std::string params;
 	};
 
 	struct timeline
 	{
 		timeline_header header;
 		initial init;
-	  //std::vector<command> commands;
+		//std::vector<command> commands;
 		std::vector<timeline_event> events;
 	};
 }
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::rockprofile_pair,
-	(int, rocktime)
-	(double, rockangle)
-)
+		client::rockprofile_pair,
+		(int, rocktime)
+		(double, rockangle)
+		)
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::rocking_profile,
-	(std::string, rockstart)
-	(int, rockstart_met)
-	(double, rockdefault)
-	(std::vector<client::rockprofile_pair>, pairs)
-)
+		client::rocking_profile,
+		(std::string, rockstart)
+		(int, rockstart_met)
+		(double, rockdefault)
+		(std::vector<client::rockprofile_pair>, pairs)
+		)
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::opt_evt_fields,
-	(std::string, prop_ID)
-	(std::string, target_name)
-	(std::string, PI)
-	(std::string, comment)
-	(double, offset)
-	(double, RA)
-	(double, dupRA)
-	(double, DEC)
-	(double, dupDEC)
-	(int, week)
-	(int, SSN)
-	(double, duration)
-	(int, slew)
-	(int, saa)
-	(client::rocking_profile, profile)
-)
+		client::opt_evt_fields,
+		(std::string, prop_ID)
+		(std::string, target_name)
+		(std::string, PI)
+		(std::string, comment)
+		(double, offset)
+		(double, RA)
+		(double, dupRA)
+		(double, DEC)
+		(double, dupDEC)
+		(int, week)
+		(int, SSN)
+		(double, duration)
+		(int, slew)
+		(int, saa)
+		(client::rocking_profile, profile)
+		)
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::initial,
-	(int, week)
-	(std::string, timeline_name)
-	(std::string, create_time)
-	(std::string, creator)
-	(double, RA)
-	(double, DEC)
-	(client::rocking_profile, profile)
-	(client::timeline_event, event)
-	(std::vector<std::string>, tako_db)
-	(std::vector<std::string>, sc_ephem)
-	(std::vector<std::string>, saa)
-	(std::vector<std::string>, tdrss_ephem)
-	(std::vector<std::string>, tdrss_sched)
-	(std::string, prev_arr_thresh)
-)
-				/* initial %= */
-
-
-BOOST_FUSION_ADAPT_STRUCT(
-	client::timeline_event,
-	(std::string, timestamp)
-	(std::string, event_name)
-	(std::string, event_type)
-	(std::string, obs_number)
-	(client::opt_evt_fields, additional)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-        client::command,
-	(std::string, time)
-	(std::string, type)
-	(std::string, order)
-	//(std::vector<std::string>,  params)
-	(std::string, params)
-)
+		client::initial,
+		(int, week)
+		(std::string, timeline_name)
+		(std::string, create_time)
+		(std::string, creator)
+		(double, RA)
+		(double, DEC)
+		(client::rocking_profile, profile)
+		(client::timeline_event, event)
+		(std::vector<std::string>, tako_db)
+		(std::vector<std::string>, sc_ephem)
+		(std::vector<std::string>, saa)
+		(std::vector<std::string>, tdrss_ephem)
+		(std::vector<std::string>, tdrss_sched)
+		(std::string, prev_arr_thresh)
+		)
+	/* initial %= */
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::timeline_header,
-	(std::string, filename)
-	(std::string, creation_time)
-	(std::string, mission_id)
-	(std::string, originator)
-	(std::string, db_version)
-	(std::string, dest_processor)
-        (std::string, start_time)
-	(std::string, stop_time)
-	(std::string, execute_flag)
-	(std::string, timeline_type)
-	(std::string, version_num)
-	(std::string, ref_timeline_name)
-	(std::string, comment)
-)
+		client::timeline_event,
+		(std::string, timestamp)
+		(std::string, event_name)
+		(std::string, event_type)
+		(std::string, obs_number)
+		(client::opt_evt_fields, additional)
+		)
 
 BOOST_FUSION_ADAPT_STRUCT(
-	client::timeline,
-	(client::timeline_header, header)
-	(client::initial, init)
-	//(std::vector<client::command>, commands)
-	(std::vector<client::timeline_event>, events)
-)
-//]
+		client::command,
+		(std::string, time)
+		(std::string, type)
+		(std::string, order)
+		//(std::vector<std::string>,  params)
+		(std::string, params)
+		)
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+		client::timeline_header,
+		(std::string, filename)
+		(std::string, creation_time)
+		(std::string, mission_id)
+		(std::string, originator)
+		(std::string, db_version)
+		(std::string, dest_processor)
+		(std::string, start_time)
+		(std::string, stop_time)
+		(std::string, execute_flag)
+		(std::string, timeline_type)
+		(std::string, version_num)
+		(std::string, ref_timeline_name)
+		(std::string, comment)
+		)
+
+BOOST_FUSION_ADAPT_STRUCT(
+		client::timeline,
+		(client::timeline_header, header)
+		(client::initial, init)
+		//(std::vector<client::command>, commands)
+		(std::vector<client::timeline_event>, events)
+		)
+	//]
 
 namespace client {
 
-template <typename Iterator>
-struct timeline_grammar : qi::grammar<Iterator, timeline(), ascii::space_type>
-{
-	timeline_grammar() : timeline_grammar::base_type(timeline)
+	template <typename Iterator>
+	struct timeline_grammar : qi::grammar<Iterator, timeline(), ascii::space_type>
 	{
-		using qi::int_;
-		using qi::lit;
-		using qi::double_;
-		using qi::lexeme;
-		using qi::repeat;
-		using ascii::char_;
-		using ascii::digit;
-		using ascii::space;
-		using ascii::string;
-		using qi::alnum;
-		using qi::blank;
-
-
-		file_path %=
-			lexeme[ +( -char_("/") >> +(qi::graph - char_("/") - char_(".")) )
-			>> char_(".") >> +qi::alnum ];
-
-
-		divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
-
-
-		timestamp %=
-			repeat(4)[digit] >> char_("/")
-			>> repeat(3)[digit]
-			>> repeat(3)[ char_(":") >> qi::repeat(2)[digit] ]
-			;
-
-
-		one_liner %= lexeme[+(char_ - qi::eol)];
-
-
-		event_name %= string("Survey") | string("Obs") | string("Profile") ;
-
-
-		event_type %= string("Begin") | string("End") ;
-
-
-		obsid %= lexeme[ string("Global") | +(digit | char_("-")) ];
-
-
-		obsnum %= lit("obs_number") >> "=" >> obsid;
-
-
-		prop_ID %= lit("//") >> lit("prop_ID") >> "=" >> +digit ;
-
-
-		target_name %= lit("//") >> lit("target_name") >> "=" >> one_liner ;
-
-
-		PI %= lit("//") >> lit("PI") >> "=" >> one_liner ;
-
-
-		comment %= lit("//") >> lit("comment") >> "=" >> one_liner ;
-
-
-		week %= lit("//") >> lit("week") >> "=" >> qi::int_ ;
-
-
-		offset %= lit("//") >> lit("offset") >> "=" >> qi::double_ >> lit("deg") ;
-
-
-		RA %= lit("//") >> lit("RA") >> "=" >> qi::double_ >> -lit("deg") ;
-
-
-		DEC %= lit("//") >> qi::omit[ qi::no_case["DEC"] ] >> "="
-			>> qi::double_ >> -lit("deg") ;
-
-
-		week %= lit("//") >> lit("week") >> "=" >> qi::int_ ;
-
-
-		SSN %= lit("//") >> lit("SSN") >> "=" >> qi::int_ ;
-
-
-		duration %= lit("//") >> lit("duration") >> "=" >> qi::double_
-			>> lit("ksec") ;
-
-
-		slew %= lit("//") >> lit("slew") >> "=" >> qi::int_ >> lit("sec") ;
-
-
-		saa %= lit("//") >> lit("saa") >> "=" >> qi::int_ >> lit("sec") ;
-
-
-		rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
-
-
-		rocking_profile %=
-			lit("//") >> lit("Rocking Profile:")
-			>> lit("//")>>lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
-			>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
-			>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
-			>> repeat(17)[rocktime_angle]
-			;
-
-
-		opt_evt_fields %=
-			prop_ID ^ target_name ^ PI ^ comment ^ offset ^ RA ^ DEC ^ RA ^ DEC
-			^ week ^ SSN ^ duration ^ slew ^ saa ^ rocking_profile ;
-
-
-		file_name %=
-			+(alnum | char_("_") | char_("."))
-			;
-
-
-
-		event %=
-			lit("//")
-			>> timestamp >> event_name >> event_type >> obsnum >> -opt_evt_fields
-			;
-
-
-		initial %=
-			lit("//") >> "Mission Week:" >> int_
-			>> "//" >> "Timeline Name:" >> lexeme[+(qi::graph)]
-			>> lit("Created:") >> timestamp
-			>> "//" >> "Created with" >> one_liner
-			>> "//" >> "Initial pointing" >> RA >> DEC
-			>> "//" >> "Initial survey-related flight parameter settings"
-			>> rocking_profile
-			>> -event
-			>> "//"
-			>> "//" >> "Input files:"
-			>> "//" >> "TAKO database:" >> file_path % lit("//")
-			>> "//" >> "Spacecraft ephemeris:" >> file_path % lit("//")
-			>> "//" >> "SAA:" >> file_path % lit("//")
-			>> "//" >> "TDRSS ephemeris:" >> file_path % lit("//")
-			>> "//" >> "TDRSS contact schedule:" >> file_path % lit("//")
-			>> "//"
-			>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
-			;
-
-		command %=
-		        timestamp
-		        >> (string("CMD") | string("ACT"))
-		        >> lexeme[+alnum]
-			>> "("
-		  //>> (+(char_ - char_(",")))  % lit(",")
-		        >> lexeme[+(char_ - char_(")"))]
-			>> ")"
-			>>";"
-		        ;
-
-		
-		header %=
-		  //File name
-			file_name
-			>> ","
-		  //Creation Time
-			>> timestamp
-			>> ","
-		  //Mission ID
-			>> *alnum
-			>> ","
-		  //Originator
-			>> lexeme[+(alnum | (blank -qi::eol))]
-		  	>> ","
-		  //DB Version
-			>> *(alnum | char_("."))
-			>> ","
-		  //Destination Processor
-			>> *alnum
-			>> ","
-		  //Start Time
-			>> timestamp
-			>> ","
-		  //Stop Time
-		        >> timestamp
-			>> ","
-		  //Execute Flag
-			>> *alnum
-			>> ","
-		  //Timeline Type
-			>> *alnum
-			>> ","
-		  //Version Number
-			>> qi::repeat(2)[digit]
-			>> ","
-		  //Reference Timeline File Name
-			>> file_name
-			>> ","
-		  //Comment
-			>> lexeme[+(char_-";")]
-			>> ";"
-			;
-
-		generic_comment %= !(event | initial)
-		        >> lit("//")
-		        >> one_liner
-		        ;
-		
-		ignored %= divider | command | generic_comment;
-
-		timeline %= *ignored
-		        >> -header >> *ignored
-			>> -initial >> *ignored
-		        >> +event >> *ignored
-			>> qi::eoi
-			;
-	}
-
-	// Start Rule for timelines
-	qi::rule<Iterator, timeline(), ascii::space_type> timeline;
-
-	// Components of a timeline
-	qi::rule<Iterator, timeline_event(), ascii::space_type> event;
-
-	// Optional fields of event struct
-	qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
-
-	// The rocking profile
-	qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
-
-	// The time,angle pair of a rocking profile
-	qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;
-
-	// The initial annotation section containing initial pointing and
-	// initial survey rocking profile
-	qi::rule<Iterator, initial(), ascii::space_type> initial;
-
-	// A divider string that should not be parsed
-	qi::rule<Iterator, void(), ascii::space_type> divider;
-
-        // Catch all for unneeded parsed data  
-        qi::rule<Iterator, void(), ascii::space_type> ignored;  
-
-        // Generic unused comments in the timeline
-        qi::rule<Iterator, void(), ascii::space_type> generic_comment;
-  
-        // Spacecraft command parsers 
-        qi::rule<Iterator, void(), ascii::space_type> command;
-  
-	// Header information for the input timeline
-	qi::rule<Iterator, timeline_header(), ascii::space_type> header;
-
-	// Sub-parsers
-	typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
-	typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
-	typedef qi::rule<Iterator, double, ascii::space_type> double_rule;
-
-	string_rule one_liner;
-	string_rule file_path;
-
-	string_rule timestamp;
-	string_rule event_name;
-	string_rule event_type;
-	string_rule obsnum;
-	string_rule obsid;
-	string_rule file_name;
-
-	string_rule prop_ID;
-	string_rule target_name;
-	string_rule PI;
-	string_rule comment;
-
-	double_rule RA;
-	double_rule DEC;
-	double_rule offset;
-	double_rule duration;
-
-	int_rule week;
-	int_rule SSN;
-	int_rule slew;
-	int_rule saa;
-
-
-
-};
+		timeline_grammar() : timeline_grammar::base_type(timeline)
+		{
+			using qi::int_;
+			using qi::lit;
+			using qi::double_;
+			using qi::lexeme;
+			using qi::repeat;
+			using ascii::char_;
+			using ascii::digit;
+			using ascii::space;
+			using ascii::string;
+			using qi::alnum;
+			using qi::blank;
+
+
+			file_path %=
+				lexeme[ +( -char_("/") >> +(qi::graph - char_("/") - char_(".")) )
+				>> char_(".") >> +qi::alnum ];
+
+
+			divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
+
+
+			timestamp %=
+				repeat(4)[digit] >> char_("/")
+				>> repeat(3)[digit]
+				>> repeat(3)[ char_(":") >> qi::repeat(2)[digit] ]
+				;
+
+			one_liner %= lexeme[+(char_ - qi::eol)];
+
+			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
+
+			rocking_profile %=
+				lit("//") >> lit("Rocking Profile:")
+				>> lit("//")>>lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
+				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
+				>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
+				>> repeat(17)[rocktime_angle]
+				;
+
+			RA %=
+				lit("//")
+				>> lit("RA")
+				>> "="
+				>> qi::double_
+				>> -lit("deg")
+				;
+
+
+			DEC %=
+				lit("//")
+				>> qi::omit[ qi::no_case["DEC"] ]
+				>> "="
+				>> qi::double_
+				>> -lit("deg")
+				;
+
+
+			opt_evt_fields %=
+				(lit("//") >> lit("prop_ID") >> "=" >> +digit)
+				^ (lit("//") >> lit("target_name") >> "=" >> one_liner)
+				^ (lit("//") >> lit("PI") >> "=" >> one_liner)
+				^ (lit("//") >> lit("comment") >> "=" >> one_liner)
+				^ (lit("//") >> lit("offset") >> "=" >> qi::double_ >> lit("deg"))
+				^ (lit("//") >> lit("week") >> "=" >> qi::int_)
+				^ (lit("//") >> lit("SSN") >> "=" >> qi::int_)
+				^ (lit("//") >> lit("duration") >> "=" >> qi::double_ >> lit("ksec"))
+				^ (lit("//") >> lit("slew") >> "=" >> qi::int_ >> lit("sec"))
+				^ (lit("//") >> lit("saa") >> "=" >> qi::int_ >> lit("sec"))
+
+
+				// Why are these duplicated?
+				// The standard allows events optional fields to hold two RA and DEC
+				// values. While they must be equivalent, they are both maintained for
+				// some reason in Tako Timelines. So For ease I've just crated additional
+				// fields to hold them, the dupRA and dupDEC fields.
+				^ RA
+				^ RA
+				^ DEC
+				^ DEC
+				^ rocking_profile
+				;
+
+
+			file_name %=
+				+(alnum | char_("_") | char_("."))
+				;
+
+			event %=
+				lit("//") >> timestamp
+				>> (string("Survey") | string("Obs") | string("Profile"))
+				>> (string("Begin") | string("End") )
+				>> (lit("obs_number") >> "=" >> lexeme[ string("Global") | +(digit | char_("-")) ])
+				>> -opt_evt_fields
+				;
+
+
+			initial %=
+				lit("//") >> "Mission Week:" >> int_
+				>> "//" >> "Timeline Name:" >> lexeme[+(qi::graph)]
+				>> lit("Created:") >> timestamp
+				>> "//" >> "Created with" >> one_liner
+				>> "//" >> "Initial pointing" >> RA >> DEC
+				>> "//" >> "Initial survey-related flight parameter settings"
+				>> rocking_profile
+				>> -event
+				>> "//"
+				>> "//" >> "Input files:"
+				>> "//" >> "TAKO database:" >> file_path % lit("//")
+				>> "//" >> "Spacecraft ephemeris:" >> file_path % lit("//")
+				>> "//" >> "SAA:" >> file_path % lit("//")
+				>> "//" >> "TDRSS ephemeris:" >> file_path % lit("//")
+				>> "//" >> "TDRSS contact schedule:" >> file_path % lit("//")
+				>> "//"
+				>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
+				;
+
+			command %=
+				timestamp
+				>> (string("CMD") | string("ACT"))
+				>> lexeme[+alnum]
+				>> "("
+				//>> (+(char_ - char_(",")))  % lit(",")
+				>> lexeme[+(char_ - char_(")"))]
+				>> ")"
+				>>";"
+				;
+
+
+			header %=
+				file_name													// File Name
+				>> "," >> timestamp								// Creation Time
+				>> "," >> *alnum									// Mission Identifier
+				>> "," >> lexeme[*(alnum)]				// Originator
+				>> "," >> *(alnum | char_("."))		// Project Database Version
+				>> "," >> *alnum									// Destination processor
+				>> "," >> timestamp								// Start Time
+				>> "," >> timestamp								// Stop Time
+				>> "," >> *alnum									// Execute Flag
+				>> "," >> *alnum									// Timeline type
+				>> "," >> qi::repeat(2)[digit]		// Version number
+				>> "," >> file_name								// Reference Timeline Filename
+				>> "," >> lexeme[+(char_ - ";")]	// Comment
+				>> ";"
+				;
+
+			generic_comment %= !(event | initial)
+				>> lit("//")
+				>> one_liner
+				;
+
+			ignored %= divider | command | generic_comment;
+
+			timeline %= *ignored
+				>> -header >> *ignored
+				>> -initial >> *ignored
+				>> +event >> *ignored
+				>> qi::eoi
+				;
+		}
+
+		// Start Rule for timelines
+		qi::rule<Iterator, timeline(), ascii::space_type> timeline;
+
+		// Rules to parse compnents of a timeline file into their various
+		// data structures needed for the timeline object.
+		qi::rule<Iterator, timeline_header(), ascii::space_type> header;
+		qi::rule<Iterator, initial(), ascii::space_type> initial;
+		qi::rule<Iterator, timeline_event(), ascii::space_type> event;
+		qi::rule<Iterator, opt_evt_fields(), ascii::space_type> opt_evt_fields;
+		qi::rule<Iterator, rocking_profile(), ascii::space_type> rocking_profile;
+		qi::rule<Iterator, rockprofile_pair(), ascii::space_type> rocktime_angle;
+
+		// Sub-parsers
+		typedef qi::rule<Iterator, std::string(), ascii::space_type> string_rule;
+		typedef qi::rule<Iterator, int, ascii::space_type> int_rule;
+		typedef qi::rule<Iterator, double, ascii::space_type> double_rule;
+
+		string_rule one_liner;
+		string_rule file_path;
+
+		string_rule timestamp;
+		string_rule file_name;
+
+		double_rule RA;
+		double_rule DEC;
+
+		// Unneeded strings and components of the Timeline file
+		qi::rule<Iterator, void(), ascii::space_type> ignored;
+		qi::rule<Iterator, void(), ascii::space_type> divider;
+		qi::rule<Iterator, void(), ascii::space_type> generic_comment;
+		qi::rule<Iterator, void(), ascii::space_type> command;
+
+	};
 	//]
 }
 
@@ -558,12 +482,11 @@ int main(int argc, char **argv)
 		std::cout << tl.header.dest_processor << std::endl;
 		std::cout << tl.header.start_time << std::endl;
 		std::cout << tl.header.stop_time << std::endl;
-	        std::cout << tl.header.execute_flag << std::endl;
+		std::cout << tl.header.execute_flag << std::endl;
 		std::cout << tl.header.timeline_type << std::endl;
 		std::cout << tl.header.version_num << std::endl;
 		std::cout << tl.header.ref_timeline_name << std::endl;
 		std::cout << tl.header.comment << std::endl;
-		
 		for (auto evt : tl.events ){
 			/* std::cout << "got: " << boost::fusion::as_vector(evt) << std::endl; */
 			std::cout
