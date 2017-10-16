@@ -351,14 +351,17 @@ namespace client {
 				>> "//" >> "Previous ARR Threshold was" >> *qi::alpha
 				;
 
+			command_param %= "("
+				>> lexeme[+(char_ - char_(")"))]
+				>> ")"
+				;
+
+
 			command %=
 				timestamp
 				>> (string("CMD") | string("ACT"))
 				>> lexeme[+alnum]
-				>> "("
-				//>> (+(char_ - char_(",")))  % lit(",")
-				>> lexeme[+(char_ - char_(")"))]
-				>> ")"
+				>> -command_param
 				>>";"
 				;
 
@@ -390,7 +393,7 @@ namespace client {
 			timeline %= *ignored
 				>> -header >> *ignored
 				>> -initial >> *ignored
-				>> +event >> *ignored
+				>> *(event | ignored) >> *ignored
 				>> qi::eoi
 				;
 		}
@@ -414,6 +417,7 @@ namespace client {
 
 		string_rule one_liner;
 		string_rule file_path;
+		string_rule command_param;
 
 		string_rule timestamp;
 		string_rule file_name;

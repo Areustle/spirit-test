@@ -99,4 +99,8 @@ S482_2017236ATS.00,2017/230:11:48:21,GLAST,GSSC,NA,SCP,
 //                       16     11240  -38.000000
 //                       17     11430    0.000000
 
+2017/236:00:35:01 CMD SMFPFLOAT ;
+
+// 2017/256:00:00:00 Obs End obs_number = Global
+2017/236:00:35:01 CMD SMFPFLOAT (PARAMID = FPVSGROCKDEFAULT, VALUE = 0.000000);
 // 2017/256:00:00:00 Obs End obs_number = Global
