@@ -54,7 +54,7 @@ namespace client
 	struct rocking_profile
 	{
 		std::string rockstart;
-		int rockstart_met;
+		double rockstart_met;
 		double rockdefault;
 		std::vector<rockprofile_pair> pairs;
 	};
@@ -150,7 +150,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 		client::rocking_profile,
 		(std::string, rockstart)
-		(int, rockstart_met)
+		(double, rockstart_met)
 		(double, rockdefault)
 		(std::vector<client::rockprofile_pair>, pairs)
 		)
@@ -279,7 +279,7 @@ namespace client {
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
-				>> lit("//")>>lit("ROCKSTART") >> "=" >> timestamp >> '(' >> int_ >> ')'
+				>> lit("//")>>lit("ROCKSTART") >> "=" >> timestamp >> '(' >> double_ >> ')'
 				>> lit("//") >> lit("ROCKDEFAULT") >> "=" >> double_
 				>> lit("//") >> lit("ROCKTIME") >> lit("ROCKANGLE")
 				>> repeat(17)[rocktime_angle]
