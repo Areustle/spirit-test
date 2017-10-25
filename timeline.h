@@ -47,7 +47,7 @@ namespace client
 
 	struct rockprofile_pair
 	{
-		int rocktime;
+		double rocktime;
 		double rockangle;
 	};
 
@@ -275,7 +275,7 @@ namespace client {
 
 			one_liner %= lexeme[+(char_ - qi::eol)];
 
-			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> int_ >> double_ ;
+			rocktime_angle %= lit("//") >> qi::omit[digit >> digit] >> double_ >> double_ ;
 
 			rocking_profile %=
 				lit("//") >> lit("Rocking Profile:")
