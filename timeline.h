@@ -264,7 +264,7 @@ namespace client {
 				>> char_(".") >> +qi::alnum ];
 
 
-			divider = lit("//") >> lexeme[+char_("-") >> qi::eol];
+			divider %= lit("//") >> lexeme[+char_("-") >> qi::eol];
 
 
 			timestamp %=
