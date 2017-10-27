@@ -143,7 +143,7 @@ namespace client
 
 BOOST_FUSION_ADAPT_STRUCT(
 		client::rockprofile_pair,
-		(int, rocktime)
+		(double, rocktime)
 		(double, rockangle)
 		)
 
