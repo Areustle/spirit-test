@@ -1,0 +1,98 @@
+-------------------------
+Parsing succeeded
+-------------------------
+S493_2017313ATS.00
+2017/307:16:09:01
+GLAST
+GSSC
+NA
+SCP
+2017/313:00:00:00
+2017/320:00:00:00
+NA
+Final
+00
+targ_week493_Final_01_DB.tcl
+Final science timeline 
+2017/313:00:00:00 Obs Begin 100801-28-1 
+	propid     : 100801
+	target_name: Freeze for loading 100400-20-1
+	PI         : TAKO
+	comment    : Inserted by TAKO at 2017-313-00:00:00
+	offset     : 0
+	RA         : 304.113
+	DEC        : 44.2271
+	week       : 493
+	SSN        : 1
+	duration   : 0.6
+	slew       : 0
+	saa        : 0
+		rockstart		: 
+		rockstart_met		: 0
+		rockdefault		: 0
+
+    
+	propid     : 
+	target_name: 
+	PI         : 
+	comment    : 
+	offset     : 0
+	RA         : 0
+	DEC        : 0
+	week       : 0
+	SSN        : 0
+	duration   : 0
+	slew       : 0
+	saa        : 0
+		rockstart		: 
+		rockstart_met		: 0
+		rockdefault		: 0
+
+2017/313:00:10:00 Obs End 100801-28-1 
+	propid     : 
+	target_name: 
+	PI         : 
+	comment    : 
+	offset     : 0
+	RA         : 0
+	DEC        : 0
+	week       : 0
+	SSN        : 0
+	duration   : 0
+	slew       : 0
+	saa        : 0
+		rockstart		: 
+		rockstart_met		: 0
+		rockdefault		: 0
+
+493
+S493_2017313ATS.00
+2017/307:16:09:01
+GLAST TAKO Version 5.20.6
+270.489
+61.5666
+	targ_week493_Final_01_DB.tcl
+
+	/data/ops/opsdata/current/ephemeris/GLAST_EPH_2017303_2017345_00.txt
+
+
+	/data/ops/opsdata/saa_definitions/L_SAA_2008198.03
+
+
+	/data/ops/opsdata/current/ephemeris/TDE_EPH_2017303_2017345_00.txt
+	/data/ops/opsdata/current/ephemeris/TDW_EPH_2017303_2017345_00.txt
+	/data/ops/opsdata/current/ephemeris/TD171_EPH_2017303_2017345_00.txt
+	/data/ops/opsdata/current/ephemeris/TD275_EPH_2017303_2017345_00.txt
+	/data/ops/opsdata/current/ephemeris/TDS_EPH_2017303_2017345_00.txt
+
+
+	/data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017307141856.txt
+	/data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017306210227.txt
+	/data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017305225027.txt
+	/data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017304113228.txt
+	/data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017303212458.txt
+	/data/ops/opsdata/current/tdrss/TSR_2017317_00.txt
+	/data/ops/opsdata/current/tdrss/TSR_2017310_00.txt
+
+
+LOW

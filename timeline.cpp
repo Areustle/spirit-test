@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 					<< rockpair.rockangle << std::endl
 					;
 				}
-				std::cout << std::endl;
+				/* std::cout << std::endl; */
 		}
 		std::cout << tl.init.week << std::endl;
 		std::cout << tl.init.timeline_name << std::endl;

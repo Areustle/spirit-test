@@ -1,0 +1,80 @@
+S493_2017313ATS.00,2017/307:16:09:01,GLAST,GSSC,NA,SCP,
+                  2017/313:00:00:00,
+                  2017/320:00:00:00,
+                  NA,Final,00,
+                  targ_week493_Final_01_DB.tcl,
+                  Final science timeline ;
+// Mission Week: 493
+// Timeline Name: S493_2017313ATS.00      Created: 2017/307:16:09:01
+// Created with GLAST TAKO Version 5.20.6
+
+// Initial pointing
+//                  RA = 270.489226
+//                  Dec = 61.566578
+// Initial survey-related flight parameter settings
+//                  Rocking Profile:
+//                       ROCKSTART   = 2017/305:21:42:00 (531265322)
+//                       ROCKDEFAULT = 0.000000
+//                           ROCKTIME   ROCKANGLE
+//                       01         0    0.000000
+//                       02       190   38.000000
+//                       03       230   46.000000
+//                       04       270   50.000000
+//                       05      3000   50.000000
+//                       06      5445   50.000000
+//                       07      5485   46.000000
+//                       08      5525   38.000000
+//                       09      5715    0.000000
+//                       10      5905  -38.000000
+//                       11      5945  -46.000000
+//                       12      5985  -50.000000
+//                       13      9982  -50.000000
+//                       14     11160  -50.000000
+//                       15     11200  -46.000000
+//                       16     11240  -38.000000
+//                       17     11430    0.000000
+// 2017/313:00:00:00 Profile    End   obs_number = 100400-19-1
+//
+// Input files:
+// TAKO database: targ_week493_Final_01_DB.tcl
+// Spacecraft ephemeris: /data/ops/opsdata/current/ephemeris/GLAST_EPH_2017303_2017345_00.txt
+// SAA: /data/ops/opsdata/saa_definitions/L_SAA_2008198.03
+// TDRSS ephemeris: /data/ops/opsdata/current/ephemeris/TDE_EPH_2017303_2017345_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TDW_EPH_2017303_2017345_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TD171_EPH_2017303_2017345_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TD275_EPH_2017303_2017345_00.txt
+//                  /data/ops/opsdata/current/ephemeris/TDS_EPH_2017303_2017345_00.txt
+// TDRSS contact schedule: /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017307141856.txt
+//                         /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017306210227.txt
+//                         /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017305225027.txt
+//                         /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017304113228.txt
+//                         /data/ops/opsdata/current/tdrss/OPS_NCC_2525_asf_2017303212458.txt
+//                         /data/ops/opsdata/current/tdrss/TSR_2017317_00.txt
+//                         /data/ops/opsdata/current/tdrss/TSR_2017310_00.txt
+//
+// Previous ARR Threshold was LOW
+
+//  Go to inertial point for 10 minutes while loading the profile definition when the current mode is Sky Survey
+//     Before the freeze the rock angle is -50.000000
+//     At end of the freeze observation, the rock angle will be -50.000000
+
+// ---------------------------------------------------
+
+// 2017/313:00:00:00 Obs        Begin obs_number = 100801-28-1
+//                   prop_ID     = 100801
+//                   target_name = Freeze for loading 100400-20-1
+//                   RA          = 304.11304 deg
+//                   dec         = 44.22707 deg
+//                   PI          = TAKO
+//                   comment     = Inserted by TAKO at 2017-313-00:00:00
+//                   week        = 493
+//                   SSN         = 1
+//                   duration    = 0.600 ksec
+//                   slew        = 0 sec
+//                   saa         = 0 sec
+//                   RA          = 304.11304 deg
+//                   DEC         = 44.22707 deg
+
+2017/313:00:00:00 CMD SACPOINTEDOBS (RA=304.113045, DEC=44.227069);
+// 2017/313:00:10:00 Obs        End   obs_number = 100801-28-1
+
