@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "timeline.h"
+#include "orbitSim/timeline.h"
 
 
 int main(int argc, char **argv)
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	timeline tl = timeline(filename);
+	Timeline tl = Timeline(filename);
 
 	bool r = tl.success;
 
@@ -27,19 +27,40 @@ int main(int argc, char **argv)
 		std::cout << "-------------------------\n";
 		std::cout << "Parsing succeeded\n";
 		std::cout << "-------------------------\n";
-		std::cout << tl.header.filename << std::endl;
-		std::cout << tl.header.creation_time << std::endl;
-		std::cout << tl.header.mission_id << std::endl;
-		std::cout << tl.header.originator << std::endl;
-		std::cout << tl.header.db_version << std::endl;
-		std::cout << tl.header.dest_processor << std::endl;
-		std::cout << tl.header.start_time << std::endl;
-		std::cout << tl.header.stop_time << std::endl;
-		std::cout << tl.header.execute_flag << std::endl;
-		std::cout << tl.header.timeline_type << std::endl;
-		std::cout << tl.header.version_num << std::endl;
-		std::cout << tl.header.ref_timeline_name << std::endl;
-		std::cout << tl.header.comment << std::endl;
+		/* std::cout << tl.header.filename << std::endl; */
+		/* std::cout << tl.header.creation_time << std::endl; */
+		/* std::cout << tl.header.mission_id << std::endl; */
+		/* std::cout << tl.header.originator << std::endl; */
+		/* std::cout << tl.header.db_version << std::endl; */
+		/* std::cout << tl.header.dest_processor << std::endl; */
+		/* std::cout << tl.header.start_time << std::endl; */
+		/* std::cout << tl.header.stop_time << std::endl; */
+		/* std::cout << tl.header.execute_flag << std::endl; */
+		/* std::cout << tl.header.timeline_type << std::endl; */
+		/* std::cout << tl.header.version_num << std::endl; */
+		/* std::cout << tl.header.ref_timeline_name << std::endl; */
+		/* std::cout << tl.header.comment << std::endl; */
+		/* std::cout << tl.init.week << std::endl; */
+		/* std::cout << tl.init.timeline_name << std::endl; */
+		/* std::cout << tl.init.create_time << std::endl; */
+		/* std::cout << tl.init.creator << std::endl; */
+		/* std::cout << tl.init.RA << std::endl; */
+		/* std::cout << tl.init.DEC << std::endl; */
+		/* for (auto db : tl.init.tako_db) std::cout <<"\t"<< db << std::endl; */
+		/* std::cout << std::endl; */
+		/* for (auto db : tl.init.sc_ephem)std::cout <<"\t"<< db << std::endl; */
+		/* std::cout << std::endl; */
+		/* std::cout << std::endl; */
+		/* for (auto db : tl.init.saa) std::cout <<"\t"<< db << std::endl; */
+		/* std::cout << std::endl; */
+		/* std::cout << std::endl; */
+		/* for (auto db : tl.init.tdrss_ephem) std::cout <<"\t"<< db << std::endl; */
+		/* std::cout << std::endl; */
+		/* std::cout << std::endl; */
+		/* for (auto db : tl.init.tdrss_sched) std::cout <<"\t"<< db << std::endl; */
+		/* std::cout << std::endl; */
+		/* std::cout << std::endl; */
+		/* std::cout << tl.init.prev_arr_thresh << std::endl; */
 		for (auto evt : tl.events ){
 			/* std::cout << "got: " << boost::fusion::as_vector(evt) << std::endl; */
 			std::cout
@@ -71,27 +92,6 @@ int main(int argc, char **argv)
 				}
 				/* std::cout << std::endl; */
 		}
-		std::cout << tl.init.week << std::endl;
-		std::cout << tl.init.timeline_name << std::endl;
-		std::cout << tl.init.create_time << std::endl;
-		std::cout << tl.init.creator << std::endl;
-		std::cout << tl.init.RA << std::endl;
-		std::cout << tl.init.DEC << std::endl;
-		for (auto db : tl.init.tako_db) std::cout <<"\t"<< db << std::endl;
-		std::cout << std::endl;
-		for (auto db : tl.init.sc_ephem)std::cout <<"\t"<< db << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		for (auto db : tl.init.saa) std::cout <<"\t"<< db << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		for (auto db : tl.init.tdrss_ephem) std::cout <<"\t"<< db << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		for (auto db : tl.init.tdrss_sched) std::cout <<"\t"<< db << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << tl.init.prev_arr_thresh << std::endl;
 	}
 	else
 	{
