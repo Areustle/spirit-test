@@ -1,0 +1,17 @@
+// 2017/313:00:00:00 Survey        Begin obs_number = 100801-28-1
+//                   offset      = -50 deg
+//                   prop_ID     = 100801
+//                   target_name = Freeze for loading 100400-20-1
+//                   RA          = 304.11304 deg
+//                   dec         = 44.22707 deg
+//                   PI          = TAKO
+//                   comment     = Inserted by TAKO at 2017-313-00:00:00
+//                   week        = 493
+//                   SSN         = 1
+//                   duration    = 0.600 ksec
+//                   slew        = 0 sec
+//                   saa         = 0 sec
+//                   RA          = 304.11304 deg
+//                   DEC         = 44.22707 deg
+
+// 2017/313:00:10:00 Survey        End   obs_number = 100801-28-1
