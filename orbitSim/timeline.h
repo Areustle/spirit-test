@@ -105,22 +105,22 @@ struct timeline_initial{
   /* std::string prev_arr_thresh; */
 };
 
-struct timeline_header
-{
-  std::string filename;
-  std::string creation_time;
-  std::string mission_id;
-  std::string originator;
-  std::string db_version;
-  std::string dest_processor;
-  std::string start_time;
-  std::string stop_time;
-  std::string execute_flag;
-  std::string timeline_type;
-  std::string version_num;
-  std::string ref_timeline_name;
-  std::string comment;
-};
+/* struct timeline_header */
+/* { */
+/*   std::string filename; */
+/*   std::string creation_time; */
+/*   std::string mission_id; */
+/*   std::string originator; */
+/*   std::string db_version; */
+/*   std::string dest_processor; */
+/*   std::string start_time; */
+/*   std::string stop_time; */
+/*   std::string execute_flag; */
+/*   std::string timeline_type; */
+/*   std::string version_num; */
+/*   std::string ref_timeline_name; */
+/*   std::string comment; */
+/* }; */
 
 struct command
 {
@@ -133,7 +133,8 @@ struct command
 
 struct timeline_wrapper
 {
-  timeline_header header;
+  /* timeline_header header; */
+  std::string header;
   timeline_initial init;
   //std::vector<command> commands;
   std::vector<timeline_event> events;
@@ -210,26 +211,26 @@ BOOST_FUSION_ADAPT_STRUCT(
     )
 
 
-BOOST_FUSION_ADAPT_STRUCT(
-    timeline_header,
-    (std::string, filename)
-    (std::string, creation_time)
-    (std::string, mission_id)
-    (std::string, originator)
-    /* (std::string, db_version) */
-    /* (std::string, dest_processor) */
-    /* (std::string, start_time) */
-    /* (std::string, stop_time) */
-    /* (std::string, execute_flag) */
-    /* (std::string, timeline_type) */
-    /* (std::string, version_num) */
-    /* (std::string, ref_timeline_name) */
-    /* (std::string, comment) */
-    )
+/* BOOST_FUSION_ADAPT_STRUCT( */
+/*     timeline_header, */
+/*     (std::string, filename) */
+/*     (std::string, creation_time) */
+/*     (std::string, mission_id) */
+/*     (std::string, originator) */
+/*     (std::string, db_version) */
+/*     (std::string, dest_processor) */
+/*     (std::string, start_time) */
+/*     (std::string, stop_time) */
+/*     (std::string, execute_flag) */
+/*     (std::string, timeline_type) */
+/*     (std::string, version_num) */
+/*     (std::string, ref_timeline_name) */
+/*     (std::string, comment) */
+/*     ) */
 
 BOOST_FUSION_ADAPT_STRUCT(
     timeline_wrapper,
-    (timeline_header, header)
+    (std::string, header)
     (timeline_initial, init)
     //(std::vector<command>, commands)
     (std::vector<timeline_event>, events)
@@ -377,22 +378,23 @@ BOOST_FUSION_ADAPT_STRUCT(
         >>";"
         ;
 
+      header %= *(char_ - ";") >> ";";
 
-      header %= file_name                 // File Name
-        >> "," >> timestamp               // Creation Time
-        >> "," >> *alnum                  // Mission Identifier
-        >> "," >> *(alnum)                // Originator
-        /* >> "," >> *(alnum | char_("."))   // Project Database Version */
-        /* >> "," >> *alnum                  // Destination processor */
-        /* >> "," >> timestamp               // Start Time */
-        /* >> "," >> timestamp               // Stop Time */
-        /* >> "," >> *alnum                  // Execute Flag */
-        /* >> "," >> *alnum                  // Timeline type */
-        /* >> "," >> qi::repeat(2)[digit]    // Version number */
-        /* >> "," >> file_name               // Reference Timeline Filename */
-        /* >> "," >> lexeme[+(char_ - ";")]  // Comment */
-        >> ";"
-        ;
+      /* header %= file_name                 // File Name */
+      /*   >> "," >> timestamp               // Creation Time */
+      /*   >> "," >> *alnum                  // Mission Identifier */
+      /*   >> "," >> *(alnum)                // Originator */
+      /*   >> "," >> *(alnum | char_("."))   // Project Database Version */
+      /*   >> "," >> *alnum                  // Destination processor */
+      /*   >> "," >> timestamp               // Start Time */
+      /*   >> "," >> timestamp               // Stop Time */
+      /*   >> "," >> *alnum                  // Execute Flag */
+      /*   >> "," >> *alnum                  // Timeline type */
+      /*   /1* >> "," >> *alnum                  // Version number *1/ */
+      /*   /1* >> "," >> file_name               // Reference Timeline Filename *1/ */
+      /*   >> "," >> lexeme[+(char_ - ";")]  // Comment */
+      /*   >> ";" */
+      /*   ; */
 
       generic_comment %= !(event | tl_initial)
         >> lit("//")
@@ -417,7 +419,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
     // Rules to parse compnents of a timeline file into their various
     // data structures needed for the timeline object.
-    qi::rule<Iterator, timeline_header(), ascii::space_type> header;
+    qi::rule<Iterator, std::string(), ascii::space_type> header;
     qi::rule<Iterator, timeline_initial(), ascii::space_type> tl_initial;
     qi::rule<Iterator, timeline_event(), ascii::space_type> event;
     qi::rule<Iterator, opt_evt_fields(), ascii::space_type> tl_opt_evt_fields;
@@ -464,7 +466,7 @@ public:
 
   // Member Variables
   bool success;
-  timeline_header header;
+  std::string header;
   timeline_initial init;
   std::vector<timeline_event> events;
 };
