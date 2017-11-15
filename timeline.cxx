@@ -3,31 +3,32 @@
  *
  *       Filename:  timeline.cxx
  *
- *    Description:
+ *    Description:  Implementation file for the Timeline class. Timeline is a
+ *                  parser and container for TAKO timeline files.
  *
  *        Version:  1.0
  *        Created:  11/01/2017 14:56:35
- *       Revision:  none
+ *       Revision:  19
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (),
- *   Organization:
+ *         Author:  Alex Reustle
+ *   Organization:  NASA/GSFC/FSSC (Fermi Science Support Center)
  *
  * =====================================================================================
  */
 #include "orbitSim/timeline.h"
 #include <stdlib.h>
 
-Timeline::Timeline(){};
+Timeline::Timeline(){}
 
 Timeline::Timeline(char const* filename)
 {
-  Timeline::populate(filename);
+  populate(filename);
 }
 
 Timeline::Timeline(std::string filename)
 {
-  Timeline::Timeline(filename.c_str());
+  Timeline(filename.c_str());
 }
 
 void
@@ -61,5 +62,5 @@ Timeline::populate(char const* filename)
 void
 Timeline::populate(std::string filename)
 {
-  Timeline::populate(filename.c_str());
+  populate(filename.c_str());
 }
